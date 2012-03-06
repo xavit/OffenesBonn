@@ -64,7 +64,7 @@ class get_rows
 		
 		if ($page_aktu<$pages)
 		{
-			$this->reset_counter();
+			$this->reset_counter($db );
 		}
 
 		//HTML Rows auslesen
@@ -84,7 +84,7 @@ class get_rows
 	 * 
 	 * @return void
 	 */
-	private function reset_counter()
+	private function reset_counter($db )
 	{
 		$sql=sprintf("UPDATE %s SET op_counter ='1',
 									op_counter_datum='%s'",
