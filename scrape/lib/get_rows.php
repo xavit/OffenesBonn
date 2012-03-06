@@ -50,7 +50,7 @@ class get_rows
 		$jahr=$datum_array['2'];
 		
 		//Testurl
-		echo $url='http://www2.bonn.de/bo_ris/ris_sql/sum_profi_result.asp?e_search_1=&e_und_oder=and&e_search_2=&e_formulartyp=00&e_adl=*&e_gre_id=0&e_operator=gre_dat_termin+%3E%3D&e_search_tt='.$tag.'&e_search_mm='.$monat.'&e_search_jjjj='.$jahr.'&'.$dbpage;
+		$url='http://www2.bonn.de/bo_ris/ris_sql/sum_profi_result.asp?e_search_1=&e_und_oder=and&e_search_2=&e_formulartyp=00&e_adl=*&e_gre_id=0&e_operator=gre_dat_termin+%3E%3D&e_search_tt='.$tag.'&e_search_mm='.$monat.'&e_search_jjjj='.$jahr.'&'.$dbpage;
 		
 		//http://www2.bonn.de/bo_ris/ris_sql/sum_profi_result.asp?e_search_1=&e_und_oder=and&e_search_2=&e_formulartyp=00&e_adl=*&e_gre_id=0&e_operator=gre_dat_termin+%3E%3D&e_search_tt=01&e_search_mm=01&e_search_jjjj=1997
 		
@@ -143,7 +143,7 @@ class get_rows
 		{
 			if ($i>10)
 			{
-				//continue;
+				continue;
 			}
 
 			//Zuerst das Dokument selber aber mit Fallunterscheidung
