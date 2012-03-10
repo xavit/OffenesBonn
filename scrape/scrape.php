@@ -32,7 +32,8 @@ $row_data=$rows->get_rows_now();
  * Dazu werden Straßen und Ortsteile ausgelesen
  * und direkt mit Hilfe von OSM lokalisiert
  * 
- * Dann geht die Pin Zuweisung später schneller!
+ * Dann geht die Pin Zuweisung später schneller
+ * Eine einfache Umkreissucher geht damit natürlich auch besser
  * 
  */
 $geo = new geo_class();
@@ -49,6 +50,8 @@ $row_data_geo=$geo->create_lokalisierung($row_data);
 */
 $mkfile=new class_make_file();
 $row_data_complete=$mkfile->create_files($row_data_geo);
+
+
 //$_SESSION['row_data_complete']=$row_data_complete;
 //}
 

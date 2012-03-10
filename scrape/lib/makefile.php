@@ -218,8 +218,11 @@ class class_make_file
 				//Filename
 				$value['kurz_betreff']=str_replace(" ","-",$value['kurz_betreff']);
 				$value['kurz_betreff']=strtolower($value['kurz_betreff']);
-				$file_name="/files/pdf/".$subdir."/".$subdir2."/".preg_replace("/[^a-z0-9\-]/", "", substr($value['kurz_betreff'],0,40))."-".$value['id'].".pdf";
-				$file=$pfadhier.$file_name;
+				$value['id']=class_methods::get_clean_text($value['id']);
+				$value['id']=preg_replace("/[^a-z0-9]/", "", $value['id']);
+				
+				$file_name="/files/pdf/".$subdir."/".$subdir2."/".preg_replace("/[^a-z0-9\-]/", "", substr($value['kurz_betreff'],0,40))."-".($value['id']).".pdf";
+				echo "FILE:"; echo $file=$pfadhier.$file_name;
 			
 				
 				/**
@@ -230,14 +233,14 @@ class class_make_file
 					//PDF im Format A4 erstellen 
 					$mpdf=new mPDF('utf-8', 'A4');
 					$mpdf->debug=true;
-					$value['id_data']['html'] = preg_replace("/(\<\!\-\-.*\-\-\>)/sU", "", $value['id_data']['html']);
+					$value['id_data']['html'] =(preg_replace("/(\<\!\-\-.*\-\-\>)/sU", "", $value['id_data']['html']));
 					$mpdf->WriteHTML($value['id_data']['html']);      
-					echo $file;
+					#echo $file;
 					//$mpdf->SetDisplayMode('fullpage');
 					$mpdf->Output($file,"F"); //I für Displayanzeige
 					//exit();	
 				}
-				
+				//exit();
 				/**
 				 * Inhalt als PDF wegspeichern
 				 * 
@@ -253,7 +256,7 @@ class class_make_file
 				if (!empty($value['id_data']['pdf']) && SCRAPE_PDF ==1)
 				{	
 					//Daten speichern
-					class  _  methods::  write_to_file   ($file,$value['id_data']['pdf']);
+					class_methods::write_to_file($file,$value['id_data']['pdf']);
 				}
 				
 				//Nur Pfad übergeben wenn auch existiert...

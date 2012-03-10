@@ -18,11 +18,18 @@ define('DB_HOST', "localhost");
 define('DB_NAME', "openboris");
 define('DB_USER', "root");
 define('DB_PASSWD', "");
-define('DB_PRAEFIX', "sdfppx07_"); 
+define('DB_PRAEFIX', "openboris_"); 
 
 /**
 * PDF Dokuemten mit scrapen true / false == 1/9
 */
-define('SCRAPE_PDF', '0');
+define('SCRAPE_PDF', '1');
+
+/**
+* Maximale Anzahl der Dokumente per Durchlauf
+*/
+define('MAX_DOK', '1');
+
+
 
 ?>

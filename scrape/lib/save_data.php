@@ -60,18 +60,36 @@ class class_save_data
 		}
 		
 		//DB Page eins raufzählen
-		$this->update_counter($db);
+		//$this->update_counter($db);
+		
+		//Seite neu laden
+		$this->reload_page();
 		
 		#print_r($rdata);
+	}
+	/**
+	 * reload_page function.
+	 * 
+	 * @access private
+	 * @return void
+	 */
+	private function reload_page()
+	{
+		global $row;
+		
+		$url='./scrape.php?page_count='.$row->page_count;
+		//header("Location: $url");
+		echo '<br />Nächste Seite in 5 Sekunden... (Neue Seite) '.$url.'<meta http-equiv="refresh" content="5; URL='.$url.' ">';
+		exit();
 	}
 	
 	private function update_counter($db)
 	{
-		$sql=sprintf("UPDATE %s SET op_counter = op_counter + 1",
-									'openboris_pagecount'
-		);
-		//$result=$db->query($sql);
-		echo "FERTIG";
+		#$sql=sprintf("UPDATE %s SET op_counter = op_counter + 1",
+		#							'openboris_pagecount'
+		#);
+		#$result=$db->query($sql);
+		//echo "FERTIG";
 		//return $result;
 	}
 	

@@ -66,7 +66,7 @@ class class_methods
 	/**
      * Inhalt in eine Datei schreiben
      *
-     * VORSICHT KEINE ÜBERPRÜFUNG
+     * VORSICHT KEINE ï¾œBERPRï¾œFUNG
      * @param Dateiname rel zu PAPOO_ABS_PFAD $file
      * @param text $inhalt
      * @param name $name

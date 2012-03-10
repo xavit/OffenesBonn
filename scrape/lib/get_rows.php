@@ -35,23 +35,44 @@ class get_rows
 		*/
 		
 		$method=new class_methods();
+		$this->count=0;
 		
 		//DB INI
 		$db = new db_class(EZSQL_DB_USER, EZSQL_DB_PASSWORD, EZSQL_DB_NAME, EZSQL_DB_HOST);
 		
 		//Seitenzahl rausholen und setzen
-		$page_aktu=$this->get_aktu_page($db);
+		if (is_numeric($_GET['page_count']))
+		{
+			$page_aktu['0']['op_counter']=$_GET['page_count'];
+		}
+		else
+		{
+			$page_aktu=$this->get_aktu_page($db);
+		}
+		
 		$dbpage="DBPAGE=".$page_aktu['0']['op_counter'];
+		$this->page_count=$page_aktu['0']['op_counter'];
 		
 		//Datum für den Link setzen
 		$datum_array=explode(".",$page_aktu['0']['op_counter_datum']);
+		//debug::print_d($datum_array);
+		
 		$tag=$datum_array['0'];
 		$monat=$datum_array['1'];
 		$jahr=$datum_array['2'];
 		
-		//Testurl
-		$url='http://www2.bonn.de/bo_ris/ris_sql/sum_profi_result.asp?e_search_1=&e_und_oder=and&e_search_2=&e_formulartyp=00&e_adl=*&e_gre_id=0&e_operator=gre_dat_termin+%3E%3D&e_search_tt='.$tag.'&e_search_mm='.$monat.'&e_search_jjjj='.$jahr.'&'.$dbpage;
+		//Fallback mit dem heutigen Datum starten
+		if (empty($tag))
+		{
+			$tag=date("d",time());
+			$monat=date("m",time());
+			$jahr=date("Y",time());
+		}
 		
+		//Url
+		$url='http://www2.bonn.de/bo_ris/ris_sql/sum_profi_result.asp?e_search_1=&e_und_oder=and&e_search_2=&e_formulartyp=00&e_adl=*&e_gre_id=0&e_operator=gre_dat_termin+%3E%3D&e_search_tt='.$tag.'&e_search_mm='.$monat.'&e_search_jjjj='.$jahr.'&'.$dbpage;
+		$this->url=$url;
+		//exit();
 		//http://www2.bonn.de/bo_ris/ris_sql/sum_profi_result.asp?e_search_1=&e_und_oder=and&e_search_2=&e_formulartyp=00&e_adl=*&e_gre_id=0&e_operator=gre_dat_termin+%3E%3D&e_search_tt=01&e_search_mm=01&e_search_jjjj=1997
 		
 		//$url='http://www2.bonn.de/bo_ris/ris_sql/sum_profi_result.asp?e_search_1=&e_und_oder=and&e_search_2=&e_formulartyp=00&e_adl=SPD%27+or+adl_kuerzel+%3D+%27CSG%27+or+adl_kuerzel+%3D+%27S%2BG%27+or+adl_kuerzel+%3D+%27C%2BS%27+or+adl_kuerzel+%3D+%27AMPEL&e_gre_id=0&e_operator=gre_dat_termin+%3E%3D&e_search_tt=01&e_search_mm=01&e_search_jjjj=2012';
@@ -69,14 +90,54 @@ class get_rows
 
 		//HTML Rows auslesen
 		$html_rows=$this->get_html_table_rows($site);
-
+		
 		//Inhalte aus Rows in Array einlesen
 		$array_rows=$this->get_array_rows($html_rows);
+		//debug::print_d($array_rows);
+		//exit();
 		
 		//Dann die Inhalte der Links und Dokumente noch einlesen
-		$complete1_array=$this->get_complete_data1($array_rows);
-				
+		$complete1_array=$this->get_complete_data1($array_rows,$db);
+		#debug::print_d($complete1_array);
+		//exit();
+		
+		//Kein Dokument mehr gefunden das nicht in der DB ist
+		if (empty($complete1_array))
+		{
+			debug::print_d("Kein DOk mehr?");
+			exit();
+			#$this->reload_new_page($page_aktu,$db);
+		}
+		#debug::print_d($complete1_array);
+		#exit();
 		return $complete1_array;
+	}
+	
+	/**
+	 * reload_new_page function.
+	 * 
+	 * An dieser Stelle wird dann eine Seite weiter gegangen
+	 * Weiter durchlaufen brauchen wir hier nicht.
+	 *
+	 * @access private
+	 * @return void
+	 */
+	private function reload_new_page($page_aktu,$db)
+	{
+		//Counter eins hochsetzen
+		$sql=sprintf("UPDATE %s SET op_counter = op_counter + 1",
+									'openboris_pagecount'
+		);
+		$result=$db->query($sql);
+		
+		$page_aktu['0']['op_counter']=$page_aktu['0']['op_counter']+1;
+		
+		//Neu laden
+		$url='./scrape.php?page_count='.$page_aktu['0']['op_counter'];
+		//header("Location: $url");
+		
+		echo 'Nächste Seite in 5 Sekunden... (get_rows) '.$url.'<meta http-equiv="refresh" content="5; URL='.$url.' ">';
+		exit();
 	}
 	
 	/**
@@ -129,64 +190,104 @@ class get_rows
 	}
 	
 	/**
+	 * check_ob_dokument_vorhanden function.
+	 * 
+	 * @access private
+	 * @param mixed $id
+	 * @return void
+	 */
+	private function check_ob_dokument_vorhanden($id,$db)
+	{
+		//Wenn leer dann so tun als ob vorhanden
+		if (empty($id))
+		{
+			return true;
+		}
+		$sql=sprintf("SELECT ob_boris_id  FROM %s
+								WHERE ob_boris_id='%s'
+								",
+									'openboris_basis',
+									$db->escape($id)
+		);
+		$result=$db->get_results($sql,ARRAY_A);
+		//exit();
+		if (!empty($result))
+		{
+			//Schon vorhanden
+			return true;
+		}
+		//NIcht vorhanden
+		return false;
+	}
+	
+	/**
 	 * get_complete_data1 function.
 	 * Jetzt noch die verlinkten Dokumente auslesen
 	 * @access private
 	 * @return void
 	 */
-	private function get_complete_data1($data=array())
+	private function get_complete_data1($data_org=array(),$db)
 	{
-		//INI
-		$i=0;
-		
-		foreach ($data as $key=>$value)
+		foreach ($data_org as $key=>$value)
 		{
-			if ($i>10)
+			if ($this->count >= MAX_DOK)
 			{
 				continue;
 			}
-
-			//Zuerst das Dokument selber aber mit Fallunterscheidung
-			if (!empty($value['id_link']))
+			
+			//Checken ob Dokument schon in DB, wenn ja weiter, wenn nein scannen und neu laden
+			if ($this->check_ob_dokument_vorhanden($value['id'],$db)==true or $this->noch_nicht_vorhanden==true)
 			{
-				
-				//Fall 1 . htm
-				if (stristr($value['id_link'],"htm"))
+				continue;
+			}
+			else
+			{
+				//Wenn x Dokumente erreicht sind
+				if ($this->count > MAX_DOK)
 				{
-					$dok=class_methods::get_site('http://www2.bonn.de/bo_ris/'.$value['id_link']);
-					$row['html']=$dok;
-					$row['html_text']=class_methods::get_clean_text($dok);
-					$row['html_meta'] = $this->get_extra_infos_dokument($dok);
+					$this->noch_nicht_vorhanden=true;
 				}
+				$this->count=$this->count+1;
+			}
+			
+			$data[$key]=$value;
+			//debug::print_d($value);
+			
+			//Zuerst das Dokument selber aber mit Fallunterscheidung
+			if (!empty($value['id_link_html']))
+			{
+				//Fall 1 . htm
+				$dok=class_methods::get_site('http://www2.bonn.de/bo_ris/'.$value['id_link_html']);
+				$row['html']=$dok;
+				$row['html_text']=class_methods::get_clean_text($dok);
+				$row['html_meta'] = $this->get_extra_infos_dokument($dok);
+			}
 				
-				//Fall 2 PDF
-				if (stristr($value['id_link'],"pdf"))
-				{
-					$dok=class_methods::get_site('http://www2.bonn.de/bo_ris/'.$value['id_link']);
+			if (!empty($value['id_link_pdf']))
+			{
+					$dok=class_methods::get_site('http://www2.bonn.de/bo_ris/'.$value['id_link_pdf']);
 					$row['pdf']=$dok;
 					//PDF Daten auslesen wenn möglich / geht natürlich nicht bei Bildern usw.
 					$convert=new pdf2txt();
 					$result=$convert->convert($dok);
 					$row['pfd_text']=class_methods::get_clean_text($result);
-				}
-				
-				//Fall 3 - keins von beiden
-				if (!stristr($value['id_link'],"pdf") && !stristr($value['id_link'],"htm"))
-				{
-					$dok=class_methods::get_site('http://www2.bonn.de/bo_ris/'.$value['id_link']);
-					$row['sonstiges_dokument']=$dok;
-					//$row['sonstiges_text']=class_methods::get_clean_text($dok);
-				}
-				
-				//Daten in Hauptarray übergeben
-				$data[$key]['id_data']=$row;
-				
 			}
+				
+			if (!empty($value['id_link_rtf']))
+			{
+					$dok=class_methods::get_site('http://www2.bonn.de/bo_ris/'.$value['id_link_rtf']);
+					$row['sonstiges_dokument']=$dok;
+					$row['sonstiges_text']=class_methods::get_clean_text($dok);
+			}
+				
+			//Daten in Hauptarray übergeben
+			$data[$key]['id_data']=$row;
+				
+			
 			
 			//Dann die Metainformationen zum Dokument
 			if (!empty($value['meta_link']))
 			{
-
 				$dok=class_methods::get_site('http://www2.bonn.de/bo_ris/ris_sql/'.$value['meta_link']);
 				$row['meta_data']=$dok;
 				$row['meta_data_text']=class_methods::get_clean_text($dok);
@@ -195,10 +296,7 @@ class get_rows
 				//Daten in Hauptarray übergeben
 				$data[$key]['id_data']=$row;
 			}
-			
-			
-			$i++;
-			
+			//$data[]=$value;
 		}
 		return $data;
 		//print_r($data);
@@ -439,18 +537,23 @@ class get_rows
 			$value="<td ".html_entity_decode($value);
 			
 			//HTML entfernen außer Links
-			$value=strip_tags($value,"<a>");
+			$value=strip_tags($value,"<a><i>");
 			
 			//Neu zuweisen
 			$neu_td[$key]=$value;
 		}
-		
+		//debug::print_d($neu_td);
 		//Zeile 1= Indikation ob sinnvoller Inhalt oder nicht
 		if (!empty($neu_td['1']))
 		{
-			//Zeile 1 = Link zum Dokument und Name des Dokumentes, erste 2 Ziffen = Jahreszahl
-			$row['id']			=  class_methods::get_clean_text($neu_td['1']);
-			$row['id_int']		= (int) class_methods::get_clean_text($neu_td['1']);
+			/**
+				* Zeile 1 = Link zum Dokument und Name des Dokumentes, erste 2 Ziffen = Jahreszahl
+				* Änderung nachdem BORIS Anzeige geändert wurde.... GRRrrr
+				*
+			*/
+			$row_data			= $this->get_dokument_id($neu_td['5']);
+			$row['id']			= $row_data['id'];
+			$row['id_int']		= $row_data['id_int'];
 			
 			//Die Integer ID korrekt setzen
 			if ($row['id']==$row['id_int'])
@@ -465,23 +568,47 @@ class get_rows
 				}
 			}
 			
-			$row['id_link'] 	= $this->get_url_js($neu_td['1']);
+			$row['id_link_html'] 	= $this->get_url_js($neu_td['1']);
+			$row['id_link_rtf'] 		= $this->get_url_js($neu_td['2']);
+			$row['id_link_pdf'] 	= $this->get_url_js($neu_td['3']);
 			
 			//Zeile 2 = Metainformationen zum Dokument
-			$row['meta_link'] 	= $this->get_url_html($neu_td['2']);
+			$row['meta_link'] 	= $this->get_url_html($neu_td['4']);
 			
 			//Zeile 3 = Kurzbetreff, oft schon mit Geo INfos
-			$row['kurz_betreff'] 	= class_methods::get_clean_text($neu_td['3']);
+			$row['kurz_betreff'] 	= class_methods::get_clean_text($row_data['betreff']);
 			
 			//Zeile 4 = Name / Link des Ausschusses
-			$row['ausschuss_link'] 	= $this->get_url_html($neu_td['4']);
-			$row['ausschuss'] 	= class_methods::get_clean_text($neu_td['4']);
+			$row['ausschuss_link'] 	= $this->get_url_html($neu_td['6']);
+			$row['ausschuss'] 	= class_methods::get_clean_text($neu_td['6']);
 			
 			//Zeile 5 = Datum der Sitzung in dem das Dokument auftaucht (nächstes oder letztes mal)
-			$row['datum'] 	= class_methods::get_clean_text($neu_td['5']);
+			$row['datum'] 	= class_methods::get_clean_text($neu_td['7']);
 		}
 		#print_r($row);
 		return $row;
+	}
+	
+	/**
+	 * get_dokument_id function.
+	 * 
+	 * @access private
+	 * @return void
+	 */
+	private function get_dokument_id($text)
+	{
+		//Dokumentenname ist jetzt in einem i tag drin.
+		$i_array=explode("<i",$text);
+		//debug::print_d($i_array);
+		//Erste Zeile = Dokument
+		#(int) class_methods::get_clean_text
+		$i_array['1']=class_methods::get_clean_text(str_ireplace(">","",$i_array['1']));
+		$dok['id']=class_methods::get_clean_text(str_ireplace("Drucksache","",$i_array['1']));
+		$dok['id_int']= preg_replace("/[^0-9]/","",trim($dok['id']));
+		$i_array['2']=str_ireplace(">","",$i_array['2']);
+		$dok['betreff']= class_methods::get_clean_text($i_array['2']);
+		
+		return $dok;
 	}
 	
 	
@@ -543,8 +670,9 @@ class get_rows
 		
 		//Jetzt sollte die Ergebnistabelle in data1[1] drin sein - die weiter aufbrechen
 		$data2 = explode("<table",$data1['1']);
-		
-		//Ergebnisse jetzt in 3 - einzelne rows
+
+		//Ergebnisse jetzt in 3 - einzelne rows, TR noch in tr umwandeln...
+		$data2['3']=str_ireplace("<tr","<tr",$data2['3']);
 		$data3 = explode("<tr",$data2['3']);
 		
 		return $data3;
