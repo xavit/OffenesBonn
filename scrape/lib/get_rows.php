@@ -105,8 +105,8 @@ class get_rows
 		if (empty($complete1_array))
 		{
 			debug::print_d("Kein DOk mehr?");
-			exit();
-			#$this->reload_new_page($page_aktu,$db);
+			#exit();
+			$this->reload_new_page($page_aktu,$db);
 		}
 		#debug::print_d($complete1_array);
 		#exit();

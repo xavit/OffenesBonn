@@ -75,9 +75,9 @@ class class_save_data
 	 */
 	private function reload_page()
 	{
-		global $row;
+		global $rows;
 		
-		$url='./scrape.php?page_count='.$row->page_count;
+		$url='./scrape.php?page_count='.$rows->page_count;
 		//header("Location: $url");
 		echo '<br />Nächste Seite in 5 Sekunden... (Neue Seite) '.$url.'<meta http-equiv="refresh" content="5; URL='.$url.' ">';
 		exit();

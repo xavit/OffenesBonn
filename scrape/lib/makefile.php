@@ -175,6 +175,21 @@ class class_make_file
 		return (($secondValue != 0) ? $secondValue : max($firstValue, $secondValue));
 	}
 	
+	private function is_utf8(&$string) {
+	if ($string === mb_convert_encoding(mb_convert_encoding($string, "UTF-32", "UTF-8"), "UTF-8", "UTF-32")) {
+		return true;
+	} 
+	else {
+	  if ($this->ignore_invalid_utf8) {
+		$string = mb_convert_encoding(mb_convert_encoding($string, "UTF-32", "UTF-8"), "UTF-8", "UTF-32") ;
+		return true;
+	  }
+	  else {
+		return false;
+	  }
+	}
+} 
+	
 	/**
 	 * class_make_file::create_pdf_files()
 	 * 
@@ -232,8 +247,15 @@ class class_make_file
 				{
 					//PDF im Format A4 erstellen 
 					$mpdf=new mPDF('utf-8', 'A4');
-					$mpdf->debug=true;
+					//$mpdf->debug=true;
 					$value['id_data']['html'] =(preg_replace("/(\<\!\-\-.*\-\-\>)/sU", "", $value['id_data']['html']));
+					
+					//Falls der Text komische utf8 Sachen enthält
+					#if (!$this->is_utf8($value['id_data']['html']))
+					#{
+					#	$value['id_data']['html']=utf8_encode($value['id_data']['html']);
+					#}
+					
 					$mpdf->WriteHTML($value['id_data']['html']);      
 					#echo $file;
 					//$mpdf->SetDisplayMode('fullpage');
