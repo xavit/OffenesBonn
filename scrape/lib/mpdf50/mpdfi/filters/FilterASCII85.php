@@ -29,7 +29,7 @@ if (!defined('ORD_tilde'))
 class FilterASCII85 {
     
     function error($msg) {
-        echo($msg);
+        die($msg);
     }
     
     function decode($in) {

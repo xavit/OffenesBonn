@@ -227,12 +227,14 @@ class fpdi_pdf_parser extends pdf_parser {
 			// mPDF 4.2.003
                 case '/LZWDecode': 
 			include_once(_MPDF_PATH.'mpdfi/filters/FilterLZW.php');
-			$decoder =& new FilterLZW();
+			// mPDF 5.0 Removed pass by reference =&
+			$decoder = new FilterLZW();
 			$stream = $decoder->decode($stream);
 			break;
                 case '/ASCII85Decode':
 			include_once(_MPDF_PATH.'mpdfi/filters/FilterASCII85.php');
-			$decoder =& new FilterASCII85();
+			// mPDF 5.0 Removed pass by reference =&
+			$decoder = new FilterASCII85();
 			$stream = $decoder->decode($stream);
 			break;
                 case null:

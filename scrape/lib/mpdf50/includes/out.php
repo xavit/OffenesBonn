@@ -11,7 +11,7 @@ $dest = $_REQUEST['dest'];
 		header("Content-transfer-encoding: binary\n");
 		if ($dest=='I') {
 			header('Content-Type: application/pdf');
-			header('Content-disposition: inline; filename='.$opname);
+			header('Content-disposition: inline; filename="'.$opname.'"');
 		}
 
 		else if ($dest=='D') {
@@ -31,7 +31,7 @@ $dest = $_REQUEST['dest'];
 			else {
 				header('Content-Type: application/octet-stream');
 			}
-			header('Content-disposition: attachment; filename='.$opname);
+			header('Content-disposition: attachment; filename="'.$opname.'"');
 		}
 		$filesize = filesize($path.$tempfilename);
 		header("Content-length:".$filesize);
@@ -43,7 +43,6 @@ $dest = $_REQUEST['dest'];
 		// Clear any files in directory that are >24 hrs old
 		$interval = 86400;
 		if ($handle = opendir(dirname($path.'dummy'))) {
-			print_r($handle);
 		   while (false !== ($file = readdir($handle))) { 
 			if (((filemtime($path.$file)+$interval) < time()) && ($file != "..") && ($file != ".") && substr($file, -3)=='pdf') { 
 				unlink($path.$file); 
