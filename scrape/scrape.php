@@ -5,7 +5,7 @@
  * 
  */
 require_once("./lib/class_debug.php");
-require_once("./lib/ini.php");
+require_once("./lib/config.php");
 require_once("./lib/methods.php");
 require_once("./lib/get_rows.php");
 require_once("./lib/geo_class.php");

@@ -1,25 +1,28 @@
 <?php 
 /**
- * INI
- */
+ * Konfiguration des Scrapers
+ * Hier kšnnen diverse Einstellungen getŠtigt werden
+  */
  
 //Version
-define('VERSION',"1.3.5");
-//printf ( "<pre>%s</pre>" , print_r ( $_COOKIE , true )); 
-//error reporting auf Produktiv Niveau setzen
-//ini_set('error_reporting', 'E_ALL & ~E_DEPRECATED & ~E_NOTICE');
+define('VERSION',"0.1.2");
 
-//MemoryLimit hochsetzen
+//MemoryLimit hochsetzen, wenn nštig noch hšher
 ini_set("memory_limit","128M");
 
 //Execution Time hochsetzen
 ini_set("max_execution_time","900");
 
-//DB Daten
+//DB Verbindungsdaten
 define('DB_HOST', "localhost");
 define('DB_NAME', "openboris");
 define('DB_USER', "root");
 define('DB_PASSWD', "");
 define('DB_PRAEFIX', "sdfppx07_"); 
+
+/**
+* PDF Dokuemten mit scrapen true / false == 1/9
+*/
+define('SCRAPE_PDF', '0');
 
 ?>

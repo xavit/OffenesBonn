@@ -247,16 +247,13 @@ class class_make_file
 				 * hier können auch Scans, Karten usw. drin sein
 				 * Ob das alles Urherberechtsmäßig ok ist - ist fraglich
 				 * 
-				 * Das macht daher keinen Sinn.
+				 * Daher kann das in der Config Datei eingestellt werden
 				 * 
 				 * */
-				if (!empty($value['id_data']['pdf']))
-				{
-					/**
+				if (!empty($value['id_data']['pdf']) && SCRAPE_PDF ==1)
+				{	
 					//Daten speichern
-					* # /////class  _  methods::  write_to_file   ($file,$value['id_data']['pdf']);
-					
-					*/
+					class  _  methods::  write_to_file   ($file,$value['id_data']['pdf']);
 				}
 				
 				//Nur Pfad übergeben wenn auch existiert...
