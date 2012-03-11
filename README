@@ -1,0 +1,17 @@
+Scraper, Suche und API für das Bonner RIS
+
+Vorraussetzungen:
+PHP 5.x
+MySQL 5.x
+ImageMagick Erweiterung für PHP
+
+Installation erfolgt einfach durch kopieren der Dateien auf einen Server.
+
+Anschließend muß noch eine Datenbank angelegt werden und die install.sql eingespielt werden.
+
+Die Verbindungsdaten tragen Sie unter /includes/config.php ein. Dort können auch andere Werte definiert werden.
+
+Viel Spaß und Erfolg wünscht
+
+Dr. Carsten Euwens
+info@papoo.de
