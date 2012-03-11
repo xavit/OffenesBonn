@@ -110,7 +110,7 @@ class class_start
 			//Anzahl rausholen
 			//echo "http://www.kobos.de/ob/search/api.php?search=".$checked->start_suche."&count=1";
 			$data=class_divers::http_request_open("http://www.kobos.de/ob/search/api.php?search=".$checked->start_suche."&count=1");
-			//debug::print_d(json_decode($data,true));
+			#debug::print_d(json_decode($data,true));
 
 			$weiter->result_anzahl=json_decode($data,true);
 			if (!is_numeric($weiter->result_anzahl))
