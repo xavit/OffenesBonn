@@ -35,26 +35,31 @@ class class_api
 	{
 		global $template_dat;
 		global $inhalt;
+		global $checked;
 		
-		//Daten zusammentragen
+
+		if (!empty($checked->count))
+		{
+			print_r(json_encode($this->get_search_count()));
+			exit();
+		}
+		
+				//Daten zusammentragen
 		$this->get_data();
+		
 
 	}
-	
 	/**
-	 * get_data function.
+	 * get_search_count function.
 	 * 
 	 * @access private
 	 * @return void
 	 */
-	private function get_data()
+	private function get_search_count()
 	{
 		global $checked;
 		global $db;
-		if (!empty($checked->search))
-		{
-			//Daten durchsuchen
-			$sql=sprintf("SELECT * FROM %s 
+		$sql=sprintf("SELECT COUNT(ob_id) FROM %s 
 								WHERE 
 								ob_ausschuss LIKE '%s' 
 								OR ob_id_data_text 	LIKE '%s'
@@ -70,6 +75,53 @@ class class_api
 								"%".$db->escape($checked->search)."%",
 								"%".$db->escape($checked->search)."%",
 								"%".$db->escape($checked->search)."%"
+								
+								);
+
+		return $db->get_var($sql);
+			
+	}
+	
+	/**
+	 * get_data function.
+	 * 
+	 * @access private
+	 * @return void
+	 */
+	private function get_data()
+	{
+		global $checked;
+		global $db;
+		global $weiter;
+	
+		if (!empty($checked->search))
+		{
+			
+			//Weiter Daten initialisieren
+			$weiter->result_anzahl=$this->get_search_count();
+			$weiter->do_weiter("teaser");
+			//Dann mit Limit die nächsten
+			$weiter->make_limit();
+			
+			
+			//Daten durchsuchen
+			$sql=sprintf("SELECT * FROM %s 
+								WHERE 
+								ob_ausschuss LIKE '%s' 
+								OR ob_id_data_text 	LIKE '%s'
+								OR ob_geo_strasse 	LIKE '%s'
+								OR ob_geo_ortsteil 	LIKE '%s'
+								OR ob_pdf_text 	LIKE '%s'
+								OR ob_partei 	LIKE '%s'								
+								%s",
+								"openboris_basis",
+								"%".$db->escape($checked->search)."%",
+								"%".$db->escape($checked->search)."%",
+								"%".$db->escape($checked->search)."%",
+								"%".$db->escape($checked->search)."%",
+								"%".$db->escape($checked->search)."%",
+								"%".$db->escape($checked->search)."%",
+								$weiter->sqllimit
 								
 								);
 				$result = $this->db->get_results($sql);

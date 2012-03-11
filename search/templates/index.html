@@ -40,19 +40,20 @@
 
  <label for="start_suche">{$plugin_sport_suche}{$plugin_error.start_suche} </label>
 
-<form id="form" method="post"><input type="text" style="width:400px;" name="start_suche" value="{$start_suche}" class="start_suche" id="start_suche"/>
+<form id="form" method="get"><input type="text" style="width:400px;" name="start_suche" value="{$start_suche}" class="start_suche" id="start_suche"/>
 <input  type="submit" name="submit_suche" id="submit_suche" value="{$plugin_sport_suche}" />
 <br />
 </form>
 
 <br />
- <h3 id="sport_die_ergebnisse_ihrer_suche" class="h1" >{$plugin_sport_die_ergebnisse_ihrer_suche}</h3>
+ <h3 id="sport_die_ergebnisse_ihrer_suche" class="h1" >{$plugin_sport_die_ergebnisse_ihrer_suche} nach "{$start_suche}" - {$result_anzahl}  {$plugin_sport_ergebnisse}</h3>
 {$api_url}
+ 
  #start#
  <div class="liste_image">
   {$paginating}
 
- <ol>
+ <ol start="{$start_ol}">
  {$search_ergebniss}
 
 </ol>

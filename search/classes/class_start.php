@@ -44,6 +44,10 @@ class class_start
 		$template_dat['current_ueber']="current";
 		$template_dat['start_suche']=class_divers::make_ausgabe($checked->start_suche);
 		
+		$page=$checked->page-1;
+		if ($page<0)$page=0;
+		$template_dat['start_ol']=$page*20+1;
+		
 		if (!empty($checked->dokument_id))
 		{
 			//Daten suchen
@@ -75,9 +79,11 @@ class class_start
 		global $checked;
 		global $db;
 		global $template_dat;
+		global $weiter;
 		
 		if (!empty($checked->dokument_id))
 		{
+			
 			$template_dat['api_url']= "http://www.kobos.de/ob/search/api.php?dokument_id=".$checked->dokument_id;
 			//Daten bei Api abholen
 			$data=class_divers::http_request_open("http://www.kobos.de/ob/search/api.php?dokument_id=".$checked->dokument_id);
@@ -97,14 +103,37 @@ class class_start
 		global $checked;
 		global $db;
 		global $template_dat;
+		global $weiter;
 		
 		if (!empty($checked->start_suche))
 		{
-			$template_dat['api_url']= "http://www.kobos.de/ob/search/api.php?search=".$checked->start_suche;
-			//Daten bei Api abholen
-			$data=class_divers::http_request_open("http://www.kobos.de/ob/search/api.php?search=".$checked->start_suche);
+			//Anzahl rausholen
+			//echo "http://www.kobos.de/ob/search/api.php?search=".$checked->start_suche."&count=1";
+			$data=class_divers::http_request_open("http://www.kobos.de/ob/search/api.php?search=".$checked->start_suche."&count=1");
 			//debug::print_d(json_decode($data,true));
-			return json_decode($data,true);
+
+			$weiter->result_anzahl=json_decode($data,true);
+			if (!is_numeric($weiter->result_anzahl))
+			{
+				$weiter->result_anzahl=0;
+			}
+			if ($weiter->result_anzahl>0)
+			{
+				$template_dat['result_anzahl']=$weiter->result_anzahl;
+				$weiter->weiter_link='./index.php?start_suche='.$checked->start_suche;
+				$weiter->do_weiter("search");
+				$weiter->make_html_links();
+		
+			
+				$template_dat['api_url']= "http://www.kobos.de/ob/search/api.php?search=".$checked->start_suche."&page=".$checked->page;
+				//Daten bei Api abholen
+				$data=class_divers::http_request_open("http://www.kobos.de/ob/search/api.php?search=".$checked->start_suche."&page=".$checked->page);
+				//debug::print_d(json_decode($data,true));
+				return json_decode($data,true);
+			}
+			return false;
+			
+			
 		}
 
 	}
@@ -124,7 +153,7 @@ class class_start
 			{	
 				$liste.='<li class="result_item"><a href="./index.php?dokument_id='.class_divers::make_ausgabe($value['ob_boris_id_int']).'"><span class="titel">'.class_divers::make_ausgabe($value['ob_kurz_betreff']).'</span>';
 				
-				$liste.='<br /><span class="sub_title">Dokument '.class_divers::make_ausgabe($value['ob_boris_id']).' vom '.class_divers::format_date($value['ob_timestamp_erstellung_ob']).'</span></a></li>';	
+				$liste.='<br /><span class="sub_title">Dokument '.class_divers::make_ausgabe($value['ob_boris_id']).' vom '.class_divers::make_ausgabe($value['ob_datum']).' - gescannt am '.class_divers::format_date($value['ob_timestamp_erstellung_ob']).'</span></a></li>';	
 			}
 		}
 		return $liste;
