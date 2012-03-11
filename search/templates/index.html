@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Dashboard - myseoapp.de</title>
+
+<script type="text/javascript" src="./js/jquery.js"></script>
+<script type="text/javascript" src='./js/vtip-min.js' ></script>
+
+<link rel="stylesheet" href="./css/960.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="./css/template.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="./css/colour.css" type="text/css" media="screen" charset="utf-8" />
+
+</head>
+
+<body>
+<div id="header">{$logoutlink}</div>
+<h1 id="head">{$seiten_name}</h1>
+
+		<ul id="navigation">
+		
+		 <li class="{$current_ueber} "><a class="active" href="index.php">{$uebersicht}</a></li>
+               								<li class="{$current_motiv}"><a href="domain.php?motive=my">{$motive_menu}</a></li>
+                
+             
+                <li class="{$current_action}"><a href="tarif.php">{$aktionen}</a></li>
+                <li class="{$current_mydata}"><a href="account.php">{$meinedaten}</a></li>
+               {$admin_link}
+ 
+		</ul>
+<div id="top-panel">
+            <div id="panel">
+                {$subtext}
+            </div>
+      </div>
+<div id="content" class="container_16 clearfix">
+		
+
+ <h2 id="sport_suchen_nach_themen" class="h1" >{$plugin_sport_suchen_nach_themen}</h2>
+
+ <label for="start_suche">{$plugin_sport_suche}{$plugin_error.start_suche} </label>
+
+<form id="form" method="post"><input type="text" style="width:400px;" name="start_suche" value="{$start_suche}" class="start_suche" id="start_suche"/>
+<input  type="submit" name="submit_suche" id="submit_suche" value="{$plugin_sport_suche}" />
+<br />
+</form>
+
+<br />
+ <h3 id="sport_die_ergebnisse_ihrer_suche" class="h1" >{$plugin_sport_die_ergebnisse_ihrer_suche}</h3>
+{$api_url}
+ #start#
+ <div class="liste_image">
+  {$paginating}
+
+ <ol>
+ {$search_ergebniss}
+
+</ol>
+ {$paginating}
+ </div>
+		</div>
+
+       
+        
+        <div id="foot" class="container_16 clearfix">
+        {$rapid_form}
+      
+
+        </div>
+
+</body>
+</html>

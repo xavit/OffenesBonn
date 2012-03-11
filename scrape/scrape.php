@@ -41,6 +41,12 @@ $row_data_geo=$geo->create_lokalisierung($row_data);
 
 
 /**
+* Einmal zwischenspeichern, damit die Rohdaten schon vorhanden sind
+*/
+$save_data=new class_save_data();
+$save_data->save_now($row_data_complete,"noreload");
+
+/**
  * Dann PDF und Images erstellen
  * Dazu werden die Rohdaten genommen und mit Hilfe
  * von mpdf werden PDFs erzeugt und 
@@ -48,6 +54,8 @@ $row_data_geo=$geo->create_lokalisierung($row_data);
  * 
  * Von jedem PDF gibt es einen Screenshot als Vorschau
 */
+
+
 $mkfile=new class_make_file();
 $row_data_complete=$mkfile->create_files($row_data_geo);
 
@@ -59,9 +67,8 @@ $row_data_complete=$mkfile->create_files($row_data_geo);
  * Dann die fertigen Daten speichern
  * Alle Rohdaten mit Ausnahme 
  * der PDF Dokumente und HTML Inhalte 
- * werden gespeichert
+ * werden in der Datenbank gespeichert
 */
-$save_data=new class_save_data();
 $save_data->save_now($row_data_complete);
 
 

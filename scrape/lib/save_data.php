@@ -21,12 +21,13 @@ class class_save_data
 	 * @param mixed $rdata
 	 * @return void
 	 */
-	public function save_now($rdata)
+	public function save_now($rdata,$reload="")
 	{
-		$db = new db_class(EZSQL_DB_USER, EZSQL_DB_PASSWORD, EZSQL_DB_NAME, EZSQL_DB_HOST);
+		mysql_ping();
+		$db = new db_class(EZSQL_DB_USER, EZSQL_DB_PASSWORD, EZSQL_DB_NAME, EZSQL_DB_HOST,true);
 		//$db->query("SET NAMES 'utf8'");
 		$db->query("SET sql_mode=''");
-		
+		mysql_ping();
 		//durchloopen
 		if (is_array($rdata))
 		{
@@ -35,6 +36,7 @@ class class_save_data
 				//Nur wenn auch ein Dokument vorhanden ist Dann speichern
 				if (is_numeric($value['id_int']) && $value['id_int']>0)
 				{
+					mysql_ping();
 					//Die Daten aufbereiten
 					$idat=$this->create_basis_daten($value);
 					#debug::print_d($idat);
@@ -63,7 +65,11 @@ class class_save_data
 		//$this->update_counter($db);
 		
 		//Seite neu laden
+		if (empty($reload))
+		{
 		$this->reload_page();
+		}
+		
 		
 		#print_r($rdata);
 	}

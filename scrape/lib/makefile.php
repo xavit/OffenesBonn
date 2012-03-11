@@ -113,6 +113,12 @@ class class_make_file
 		
 		//Dann alle Seiten durchlaufen und Bilder erzeugen
 		for ($i = 0; $i < $pages; $i++) {
+		//Maximal 100 Seiten
+		if ($i>100)
+		{
+			continue;
+		}
+		
     	//Seitenzahl festlegen
     	$pdf=$pfadhier.$pdf_org."[".$i."]";
     	//auslesen

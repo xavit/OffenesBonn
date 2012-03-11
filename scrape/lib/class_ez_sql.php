@@ -45,10 +45,10 @@
 		// ==================================================================
 		//	DB Constructor - connects to the server and selects a database
 
-		function db_class($dbuser, $dbpassword, $dbname, $dbhost)
+		function db_class($dbuser, $dbpassword, $dbname, $dbhost,$newlink=false)
 		{
 
-			$this->dbh = @mysql_connect($dbhost,$dbuser,$dbpassword);
+			$this->dbh = @mysql_connect($dbhost,$dbuser,$dbpassword,$newlink);
 
 			if ( ! $this->dbh )
 			{
