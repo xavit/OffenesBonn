@@ -77,7 +77,7 @@ class class_make_file
 					}
 					
 					//TODO: Wieder aktivieren auf Server!!!
-					//$rdata[$key]['thumbnails']=$this->create_img_frompdf($value['pdf_file_url'],$pfadhier);
+					$rdata[$key]['thumbnails']=$this->create_img_frompdf($value['pdf_file_url'],$pfadhier);
 					
 					//TODO: Das hier deaktivieren ...
 					$rdata[$key]['thumbnails'][]="thumbnail-1.jpg";
@@ -116,32 +116,45 @@ class class_make_file
     	//Seitenzahl festlegen
     	$pdf=$pfadhier.$pdf_org."[".$i."]";
     	//auslesen
-			$im->readImage($pdf);
+    	if (file_exists($pfadhier.$pdf_org))
+    	{
+			try {
+			    		$im->readImage($pdf);
+						
+
+					} catch (Exception $e) {
+		  	 	 echo 'Exception abgefangen: ',  $e->getMessage(), "\n";
+				}
+			
 			$im->setImageColorspace(255); 
-			$im->setCompression(Imagick::COMPRESSION_JPEG); 
-			$im->setCompressionQuality(60); 
-			$im->setImageFormat('jpg'); 
-			$im->setImageUnits(imagick::RESOLUTION_PIXELSPERINCH);
+						$im->setCompression(Imagick::COMPRESSION_JPEG); 
+						$im->setCompressionQuality(60); 
+						$im->setImageFormat('jpg'); 
+						$im->setImageUnits(imagick::RESOLUTION_PIXELSPERINCH);
+						
+						//Damti testweise ausgeben
+						#header( "Content-Type: image/png" );
+						#echo $im;
+						#exit();
+						$pdf_img=str_replace(".pdf","",($pdf_org));
+						$pdf_img=str_replace("/files/pdf/","",($pdf_img));
+						$im->setImageFileName($pfadhier."files/images/thumbs/".$pdf_img."_".$i.".jpg");
+						
+						//Pfade saven
+						$image_files[]=$pfadhier."files/images/thumbs/".$pdf_img."_".$i.".jpg";
+						
+						//Speichern
+						$im->writeImage();
 			
-			//Damti testweise ausgeben
-			#header( "Content-Type: image/png" );
-			#echo $im;
-			#exit();
-			$pdf_img=str_replace(".pdf","",($pdf_org));
-			$pdf_img=str_replace("/files/pdf/","",($pdf_img));
-			$im->setImageFileName($pfadhier."files/images/thumbs/".$pdf_img."_".$i.".jpg");
-			
-			//Pfade saven
-			$image_files[]=$pfadhier."files/images/thumbs/".$pdf_img."_".$i.".jpg";
-			
-			//Speichern
-			$im->writeImage();
-			
+						
 			//Noch verkleinern... image_magick macht die Bilder zu groß
 			$image = new SimpleImage();
-	    $image->load($pfadhier."files/images/thumbs/".$pdf_img."_".$i.".jpg");
-	    $image->resizeToHeight(300);
-	    $image->save($pfadhier."files/images/thumbs/".$pdf_img."_".$i."x.jpg");
+	   		 $image->load($pfadhier."files/images/thumbs/".$pdf_img."_".$i.".jpg");
+	    	$image->resizeToHeight(300);
+	    	$image->save($pfadhier."files/images/thumbs/".$pdf_img."_".$i."x.jpg");
+	    	unlink($pfadhier."files/images/thumbs/".$pdf_img."_".$i.".jpg");
+	    	echo ($pfadhier."files/images/thumbs/".$pdf_img."_".$i."x.jpg");
+	   		}
 		}
 		
 		return $image_files;

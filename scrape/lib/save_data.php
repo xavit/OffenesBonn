@@ -79,7 +79,7 @@ class class_save_data
 		
 		$url='./scrape.php?page_count='.$rows->page_count;
 		//header("Location: $url");
-		echo '<br />Nächste Seite in 5 Sekunden... (Neue Seite) '.$url.'<meta http-equiv="refresh" content="5; URL='.$url.' ">';
+		echo '<br />Nächste Seite in 2 Sekunden... (Neue Seite) '.$url.'<meta http-equiv="refresh" content="2; URL='.$url.' ">';
 		exit();
 	}
 	

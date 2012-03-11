@@ -33,6 +33,7 @@ class get_rows
 		&e_search_mm=01 // Monat
 		&e_search_jjjj=2012 // Jahr
 		*/
+		echo 'Nächste Seite in 20 Sekunden... (get_rows) '.$url.'<meta http-equiv="refresh" content="20; URL='.$url.' ">';
 		
 		$method=new class_methods();
 		$this->count=0;
@@ -136,7 +137,7 @@ class get_rows
 		$url='./scrape.php?page_count='.$page_aktu['0']['op_counter'];
 		//header("Location: $url");
 		
-		echo 'Nächste Seite in 5 Sekunden... (get_rows) '.$url.'<meta http-equiv="refresh" content="5; URL='.$url.' ">';
+		echo 'Nächste Seite in 2 Sekunden... (get_rows) '.$url.'<meta http-equiv="refresh" content="2; URL='.$url.' ">';
 		exit();
 	}
 	
