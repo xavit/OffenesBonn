@@ -21,6 +21,13 @@ define('DB_USER', "");
 define('DB_PASSWD', "");
 define('DB_PRAEFIX', "openboris_"); 
 
+/**
+define('DB_HOST', "localhost");
+define('DB_NAME', "openboris");
+define('DB_USER', "root");
+define('DB_PASSWD', "");
+define('DB_PRAEFIX', "openboris_"); 
+*/
 
 /**
 * PDF Dokuemten mit scrapen true / false == 1/9
