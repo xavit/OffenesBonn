@@ -200,8 +200,10 @@ class class_start
 				if (!stristr($value,"thumbnail"))
 				{
 					$im1=explode("scrape",$value);
-					$im1['1']=str_ireplace(".jpg","x.jpg",$im1['1']);
-					$img_html.='<img src="'.SCRAPER_URL.$im1['1'].'" />';
+					//debug::print_d($im1);
+					//$im1['1']=str_ireplace(".jpg",".jpg",$im1['1']);
+					$scraper_url=SCRAPER_URL;
+					$img_html.='<img src="'.$scraper_url.$im1['1'].'" />';
 				}
 			}
 		}

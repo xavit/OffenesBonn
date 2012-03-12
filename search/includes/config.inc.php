@@ -7,7 +7,7 @@ ini_set("memory_limit","128M");
 #ini_set("error_reporting","2");
 
 //Standardpfad setzen
-define('WEB_PFAD', "/OffenesBonnNeu/OffenesBonn");
+define('WEB_PFAD', "ob/");
 define('ABS_PFAD', $_SERVER['DOCUMENT_ROOT'].WEB_PFAD."/search");
 define('ABS_PFAD_ROOT', $_SERVER['DOCUMENT_ROOT'].WEB_PFAD."");
 
@@ -25,18 +25,18 @@ define('PAGINATING',"20");
 define('IS_LIFE',"staging");
 
 //DB Daten
-
+/**
 define('DB_HOST', "localhost");
 define('DB_NAME', "openboris");
 define('DB_USER', "root");
 define('DB_PASSWD', "");
 define('DB_PRAEFIX', "openboris_"); 
+*/
 
-/**
 define('DB_HOST', "localhost");
 define('DB_NAME', "d01378a6");
 define('DB_USER', "d01378a6");
 define('DB_PASSWD', "2rwGVK83Wt6z6Tnw");
 define('DB_PRAEFIX', "openboris_"); 
-*/
+
 ?>

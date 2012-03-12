@@ -77,11 +77,11 @@ class class_make_file
 					}
 					
 					//TODO: Wieder aktivieren auf Server!!!
-					#$rdata[$key]['thumbnails']=$this->create_img_frompdf($value['pdf_file_url'],$pfadhier);
+					$rdata[$key]['thumbnails']=$this->create_img_frompdf($value['pdf_file_url'],$pfadhier);
 					
 					//TODO: Das hier deaktivieren ...
-					$rdata[$key]['thumbnails'][]="thumbnail-1.jpg";
-					$rdata[$key]['thumbnails'][]="thumbnail-2.jpg";
+					#$rdata[$key]['thumbnails'][]="thumbnail-1.jpg";
+					#$rdata[$key]['thumbnails'][]="thumbnail-2.jpg";
 				}
 				//print_r($rdata[$key]['thumbnails']);
 				
@@ -106,7 +106,7 @@ class class_make_file
 		$im = new imagick();
 		
 		//Auflösung 
-		$im->setResolution(30,30);
+		$im->setResolution(60,60);
 		
 		//Anzahl der Seiten des PDFs
 		$pages=$this->getNumPagesInPDF($pfadhier.$pdf_org);
@@ -154,12 +154,14 @@ class class_make_file
 			
 						
 			//Noch verkleinern... image_magick macht die Bilder zu groß
+			/**
 			$image = new SimpleImage();
 	   		 $image->load($pfadhier."files/images/thumbs/".$pdf_img."_".$i.".jpg");
 	    	$image->resizeToHeight(300);
 	    	$image->save($pfadhier."files/images/thumbs/".$pdf_img."_".$i."x.jpg");
 	    	unlink($pfadhier."files/images/thumbs/".$pdf_img."_".$i.".jpg");
 	    	echo ($pfadhier."files/images/thumbs/".$pdf_img."_".$i."x.jpg");
+	    	*/
 	   		}
 		}
 		

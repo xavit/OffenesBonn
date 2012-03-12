@@ -480,15 +480,18 @@ class class_divers
 	function http_request_open($url,$timeout=10)
 	{
 		$ch = curl_init( $url );
+		#echo $url;
 		curl_setopt( $ch, CURLOPT_TIMEOUT, $timeout );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, 0 );
+				curl_setopt( $ch, CURLOPT_USERPWD,"offenes:bonn2012"); 	
 		##curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1 );
 		curl_setopt( $ch, CURLOPT_USERAGENT,
 			"Mozilla/5.0 (Windows; U; Windows NT 5.1; rv:1.8.1.4) Gecko/20070515 Firefox/2.0.0.4" );
 	
     $curl_ret = curl_exec( $ch );
 		curl_close( $ch );
+		#print_r($curl_ret);
 		return $curl_ret;
 	}
 	
