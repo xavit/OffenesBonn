@@ -50,7 +50,7 @@ class geo_class
 			{
 				//Mögliche Geodaten herausholen
 				$geo_moeglich_array=$this->get_roh_daten($value);
-
+				#debug::print_d($geo_moeglich_array);
 				$result=array();
 				
 				//Zuerst mit Headline probieren in Straßen
@@ -89,7 +89,7 @@ class geo_class
 					//Ortsteil und GEO
 					$result=$this->get_real_ortsteil($result,$key,$str_ort_array,$rdata);
 				}
-				
+				//debug::print_d($result);
 				$rdata[$key]['geo']=$result;
 				
 			}
@@ -117,7 +117,8 @@ class geo_class
 			}
 		}
 		
-		//print_r($rdata);
+		#print_r($rdata);
+		//exit();
 		return $rdata;
 	}
 	

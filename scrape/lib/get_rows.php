@@ -99,7 +99,7 @@ class get_rows
 		
 		//Dann die Inhalte der Links und Dokumente noch einlesen
 		$complete1_array=$this->get_complete_data1($array_rows,$db);
-		#debug::print_d($complete1_array);
+		//debug::print_d($complete1_array);
 		//exit();
 		
 		//Kein Dokument mehr gefunden das nicht in der DB ist
@@ -606,8 +606,10 @@ class get_rows
 		$i_array['1']=class_methods::get_clean_text(str_ireplace(">","",$i_array['1']));
 		$dok['id']=class_methods::get_clean_text(str_ireplace("Drucksache","",$i_array['1']));
 		$dok['id_int']= preg_replace("/[^0-9]/","",trim($dok['id']));
-		$i_array['2']=str_ireplace(">","",$i_array['2']);
+
 		$dok['betreff']= class_methods::get_clean_text($i_array['2']);
+		$dok['betreff']=str_ireplace(">","",$dok['betreff']);
+		//debug::print_d($dok);
 		
 		return $dok;
 	}
