@@ -7,12 +7,13 @@ ini_set("memory_limit","128M");
 #ini_set("error_reporting","2");
 
 //Standardpfad setzen
-define('WEB_PFAD', "ob/");
+define('WEB_PFAD', "/OffenesBonnNeu/OffenesBonn");
 define('ABS_PFAD', $_SERVER['DOCUMENT_ROOT'].WEB_PFAD."/search");
 define('ABS_PFAD_ROOT', $_SERVER['DOCUMENT_ROOT'].WEB_PFAD."");
 
 //Url zum Scraper http://www.kobos.de/ob/scrape
-define('SCRAPER_URL',"http://www.kobos.de/ob/scrape");
+define('SCRAPER_URL',"http://localhost/OffenesBonnNeu/OffenesBonn/scrape");
+define('API_URL',"http://localhost/OffenesBonnNeu/OffenesBonn/search");
 
 
 //Seitenname
@@ -22,21 +23,21 @@ define('SITE_NAME',"offenesbonn.de");
 define('PAGINATING',"20");
 
 //LIfe oder staging
-define('IS_LIFE',"staging");
+define('IS_LIFE',"life");
 
 //DB Daten
-/**
+
 define('DB_HOST', "localhost");
 define('DB_NAME', "openboris");
 define('DB_USER', "root");
 define('DB_PASSWD', "");
 define('DB_PRAEFIX', "openboris_"); 
-*/
 
+/**
 define('DB_HOST', "localhost");
-define('DB_NAME', "d01378a6");
-define('DB_USER', "d01378a6");
-define('DB_PASSWD', "2rwGVK83Wt6z6Tnw");
+define('DB_NAME', "xd01378a6");
+define('DB_USER', "xd01378a6");
+define('DB_PASSWD', "2rwGxVK83Wt6z6Txnw");
 define('DB_PRAEFIX', "openboris_"); 
-
+*/
 ?>

@@ -84,9 +84,9 @@ class class_start
 		if (!empty($checked->dokument_id))
 		{
 			
-			$template_dat['api_url']= "http://www.kobos.de/ob/search/api.php?dokument_id=".$checked->dokument_id;
+			$template_dat['api_url']= API_URL."/api.php?dokument_id=".$checked->dokument_id;
 			//Daten bei Api abholen
-			$data=class_divers::http_request_open("http://www.kobos.de/ob/search/api.php?dokument_id=".$checked->dokument_id);
+			$data=class_divers::http_request_open(API_URL."/api.php?dokument_id=".$checked->dokument_id);
 			//debug::print_d(json_decode($data,true));
 			return json_decode($data,true);
 		}
@@ -109,7 +109,7 @@ class class_start
 		{
 			//Anzahl rausholen
 			//echo "http://www.kobos.de/ob/search/api.php?search=".$checked->start_suche."&count=1";
-			$data=class_divers::http_request_open("http://www.kobos.de/ob/search/api.php?search=".$checked->start_suche."&count=1");
+			$data=class_divers::http_request_open(API_URL."/api.php?search=".$checked->start_suche."&count=1");
 			#debug::print_d(json_decode($data,true));
 
 			$weiter->result_anzahl=json_decode($data,true);
@@ -125,9 +125,9 @@ class class_start
 				$weiter->make_html_links();
 		
 			
-				$template_dat['api_url']= "http://www.kobos.de/ob/search/api.php?search=".$checked->start_suche."&page=".$checked->page;
+				$template_dat['api_url']= API_URL."/api.php?search=".$checked->start_suche."&page=".$checked->page;
 				//Daten bei Api abholen
-				$data=class_divers::http_request_open("http://www.kobos.de/ob/search/api.php?search=".$checked->start_suche."&page=".$checked->page);
+				$data=class_divers::http_request_open(API_URL."/api.php?search=".$checked->start_suche."&page=".$checked->page);
 				//debug::print_d(json_decode($data,true));
 				return json_decode($data,true);
 			}
@@ -187,7 +187,13 @@ class class_start
 		}
 		return $liste;
 	}
-	
+	/**
+	 * get_thumbnails function.
+	 * 
+	 * @access private
+	 * @param string $thumbnails. (default: "")
+	 * @return void
+	 */
 	private function get_thumbnails($thumbnails="")
 	{
 		$thumbs=unserialize($thumbnails);

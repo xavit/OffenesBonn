@@ -51,6 +51,12 @@ class get_rows
 			$page_aktu=$this->get_aktu_page($db);
 		}
 		
+		//TEst Modus
+		if ($_GET['page_count'] > 20)
+		{
+			exit();
+		}
+		
 		$dbpage="DBPAGE=".$page_aktu['0']['op_counter'];
 		$this->page_count=$page_aktu['0']['op_counter'];
 		

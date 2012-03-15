@@ -1,38 +1,4 @@
 
 
 <div class="grid_4">
-				<h3 id="sport_hilfe__fragen" class="h1" >{$plugin_sport_hilfe__fragen}</h3>
-
- <p id="sport_so_funktioniert_es" class="p1" >{$plugin_sport_so_funktioniert_es}</p>
- <strong>Support Telefon</strong>
-<p> Wir sind auch telefonisch erreichbar unter<br /><strong>0228 / 280 56 68</strong> <br /> Werktags von 08:30 - 18:00</p>
- © MySEOApp.de 2011. Alle Rechte vorbehalten. Version {$version_jitc} | <a href="http://www.myseoapp.de/datensicherheit-und-schutz.html">Datensicherheit</a> | <a href="http://www.myseoapp.de/seo-software-support-und-hilfe.html">Support</a>
 </div>
-<div class="grid_5">
- <h3 id="sport_feedback" class="h1" >{$plugin_sport_feedback}</h3>
-
- <p id="sport_sie_haben_fragen" class="p1" >{$plugin_sport_sie_haben_fragen}</p>
-<form method="post" action="" >
- <label for="index_anfrage" style="display: none;">{$plugin_sport_anfrage}{$plugin_error.index_anfrage} </label>
-{if $wurde_verschickt} <strong>{$wurde_verschickt}</strong>{/if}
-<textarea cols="30" rows="6" name="index_anfrage"  class="index_anfrage" id="index_anfrage">{$index_anfrage}</textarea>
-<br />
- <input type="submit" name="submit_message" style="float: right;" value="{$plugin_sport_abschicken_jetzt}" />
- </form>
-<br /><br />
-        </div>
-     <div class="grid_6">  <h3 id="sport_myseoapp_news" class="h1" >{$plugin_sport_myseoapp_news}</h3>
-     {$msa_news}
-     </div>
- <!-- Piwik -->
-<script type="text/javascript">
-var pkBaseURL = (("https:" == document.location.protocol) ? "https://www.myseoapp.de/piwik/" : "http://www.myseoapp.de/piwik/");
-document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-</script><script type="text/javascript">
-try {
-var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 2);
-piwikTracker.trackPageView();
-piwikTracker.enableLinkTracking();
-} catch( err ) {}
-</script><noscript><p><img src="http://www.myseoapp.de/piwik/piwik.php?idsite=2" style="border:0" alt="" /></p></noscript>
-<!-- End Piwik Tracking Code -->
