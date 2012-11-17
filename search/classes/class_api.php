@@ -101,9 +101,14 @@ class class_api
 			$weiter->result_anzahl=$this->get_search_count();
 			$weiter->do_weiter("teaser");
 			//Dann mit Limit die nächsten
+			
 			$weiter->make_limit(20);
-			
-			
+
+			if ($checked->xpage=="all")
+			{
+			    $weiter->make_limit(20000);
+		
+			   }
 			//Daten durchsuchen
 			$sql=sprintf("SELECT * FROM %s 
 								WHERE 

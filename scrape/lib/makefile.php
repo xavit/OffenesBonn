@@ -126,33 +126,36 @@ class class_make_file
     	{
 			try {
 			    		$im->readImage($pdf);
-						$im->setImageColorspace(255); 
-                        $im->setCompression(Imagick::COMPRESSION_JPEG); 
-                        $im->setCompressionQuality(60); 
-                        $im->setImageFormat('jpg'); 
-                        $im->setImageUnits(imagick::RESOLUTION_PIXELSPERINCH);
-                        
-                        //Damti testweise ausgeben
-                        #header( "Content-Type: image/png" );
-                        #echo $im;
-                        #exit();
-                        $pdf_img=str_replace(".pdf","",($pdf_org));
-                        $pdf_img=str_replace("/files/pdf/","",($pdf_img));
-                        $im->setImageFileName($pfadhier."files/images/thumbs/".$pdf_img."_".$i.".jpg");
-                        
-                        //Pfade saven
-                        $image_files[]=$pfadhier."files/images/thumbs/".$pdf_img."_".$i.".jpg";
-                        
-                        //Speichern
-                        $im->writeImage();
+						
 
 					} catch (Exception $e) {
 		  	 	 echo 'Exception abgefangen: ',  $e->getMessage(), "\n";
 				}
-			
-			
-			
+			if (empty($e))
+			{
+			    //die ("NIX");
+			     
+			$im->setImageColorspace(255); 
+						$im->setCompression(Imagick::COMPRESSION_JPEG); 
+						$im->setCompressionQuality(60); 
+						$im->setImageFormat('jpg'); 
+						$im->setImageUnits(imagick::RESOLUTION_PIXELSPERINCH);
 						
+						//Damti testweise ausgeben
+						#header( "Content-Type: image/png" );
+						#echo $im;
+						#exit();
+						$pdf_img=str_replace(".pdf","",($pdf_org));
+						$pdf_img=str_replace("/files/pdf/","",($pdf_img));
+						$im->setImageFileName($pfadhier."files/images/thumbs/".$pdf_img."_".$i.".jpg");
+						
+						//Pfade saven
+						echo $image_files[]=$pfadhier."files/images/thumbs/".$pdf_img."_".$i.".jpg";
+						
+						//Speichern
+						$im->writeImage();
+			ini_set(Display_errors, "1");
+            }		
 			//Noch verkleinern... image_magick macht die Bilder zu groﬂ
 			/**
 			$image = new SimpleImage();

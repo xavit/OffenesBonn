@@ -93,7 +93,7 @@
 
 		map.setView(new L.LatLng(50.7064318015311,7.12659787095378), 11).addLayer(cloudmade);
 		
-		$.getJSON('/api.php?search={$start_suche}&page=', function(data) {
+		$.getJSON('/api.php?search={$start_suche}&xpage=all', function(data) {
 		  var items = [];
 			
 			  $.each(data, function(key, val) {
