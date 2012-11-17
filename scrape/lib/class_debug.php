@@ -3,7 +3,7 @@
 /**
  * Uebungen Klasse
  * 
- * Dazu gehören noch einige weitere Klassen 
+ * Dazu gehï¿½ren noch einige weitere Klassen 
  * die entsprechend eingebunden werden 
  * @package Papoo
  * @author Papoo Software
@@ -11,7 +11,7 @@
  * @version $Id$
  * @access public
  */
-if ( eregi('class_debug.php', $_SERVER['PHP_SELF']) ) die( 'You are not allowed to see this page directly' );
+//if ( eregi('class_debug.php', $_SERVER['PHP_SELF']) ) die( 'You are not allowed to see this page directly' );
 
 class debug
 {

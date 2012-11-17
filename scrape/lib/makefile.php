@@ -77,7 +77,7 @@ class class_make_file
 					}
 					
 					//TODO: Wieder aktivieren auf Server!!!
-					$rdata[$key]['thumbnails']=$this->create_img_frompdf($value['pdf_file_url'],$pfadhier);
+					//$rdata[$key]['thumbnails']=$this->create_img_frompdf($value['pdf_file_url'],$pfadhier);
 					
 					//TODO: Das hier deaktivieren ...
 					#$rdata[$key]['thumbnails'][]="thumbnail-1.jpg";

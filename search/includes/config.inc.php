@@ -7,19 +7,19 @@ ini_set("memory_limit","128M");
 #ini_set("error_reporting","2");
 
 //Standardpfad setzen
-define('WEB_PFAD', "/OffenesBonnNeu/OffenesBonn");
+define('WEB_PFAD', "/OffenesBonn");
 define('ABS_PFAD', $_SERVER['DOCUMENT_ROOT'].WEB_PFAD."/search");
 define('ABS_PFAD_ROOT', $_SERVER['DOCUMENT_ROOT'].WEB_PFAD."");
 
 //Url zum Scraper http://www.kobos.de/ob/scrape
-define('SCRAPER_URL',"http://localhost/OffenesBonnNeu/OffenesBonn/scrape");
-define('API_URL',"http://localhost/OffenesBonnNeu/OffenesBonn/search");
+define('SCRAPER_URL',"http://localhost/OffenesBonn/scrape");
+define('API_URL',"http://localhost/OffenesBonn/search");
 
 
 //Seitenname
 define('SITE_NAME',"offenesbonn.de");
 
-//Anzahl der EintrŠge pro Seite
+//Anzahl der Eintrï¿½ge pro Seite
 define('PAGINATING',"20");
 
 //LIfe oder staging

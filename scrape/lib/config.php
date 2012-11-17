@@ -1,13 +1,13 @@
 <?php 
 /**
  * Konfiguration des Scrapers
- * Hier kšnnen diverse Einstellungen getŠtigt werden
+ * Hier kï¿½nnen diverse Einstellungen getï¿½tigt werden
   */
  
 //Version
 define('VERSION',"0.1.2");
 
-//MemoryLimit hochsetzen, wenn nštig noch hšher
+//MemoryLimit hochsetzen, wenn nï¿½tig noch hï¿½her
 ini_set("memory_limit","128M");
 
 //Execution Time hochsetzen
@@ -16,8 +16,8 @@ ini_set("max_execution_time","900");
 //DB Verbindungsdaten
 
 define('DB_HOST', "localhost");
-define('DB_NAME', "");
-define('DB_USER', "");
+define('DB_NAME', "openboris");
+define('DB_USER', "root");
 define('DB_PASSWD', "");
 define('DB_PRAEFIX', "openboris_"); 
 
@@ -30,7 +30,7 @@ define('SCRAPE_PDF', '1');
 /**
 * Maximale Anzahl der Dokumente per Durchlauf
 */
-define('MAX_DOK', '5');
+define('MAX_DOK', '10');
 
 
 

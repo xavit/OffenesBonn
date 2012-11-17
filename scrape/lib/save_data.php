@@ -28,6 +28,8 @@ class class_save_data
 		//$db->query("SET NAMES 'utf8'");
 		$db->query("SET sql_mode=''");
 		mysql_ping();
+        #print_r($rdata);
+        #exit();
 		//durchloopen
 		if (is_array($rdata))
 		{
@@ -405,7 +407,7 @@ class class_save_data
 									$db->escape($idat['ob_pdf_file_url']),
 									$db->escape($idat['ob_thumbnail'])
 		);
-		//print_r($sql);
+		#print_r($sql);
 		$result=$db->query($sql);
 		return $db->insert_id;
 	}
@@ -474,7 +476,7 @@ class class_save_data
 									$db->escape($idat['ob_thumbnail']),
 									$db->escape($idat['id'])
 		);
-		//print_r($sql);
+		#print_r($sql);
 		$result=$db->query($sql);
 		
 	}
@@ -510,7 +512,7 @@ class class_save_data
 	 */
 	private function create_basis_daten($value_dat)
 	{
-		#print_r($value_dat);
+		#debug::print_d($value_dat);
 		
 		if (is_array($value_dat))
 		{
@@ -522,7 +524,7 @@ class class_save_data
 				}
 			}
 		}
-
+       #debug::print_d($value_dat['id_data']['meta_data_extra']);
 		$neu['ob_id_data_text']=$value_dat['id_data']['html_text'];
 		$neu['ob_meta_daten']=serialize($value_dat['id_data']['html_meta']);
 		$neu['ob_zugriffsart']=($value_dat['id_data']['meta_data_extra']['zugriff']);
@@ -532,16 +534,27 @@ class class_save_data
 		$neu['ob_kosten_gesamt']=($value_dat['id_data']['meta_data_extra']['kosten_einzeln']);
 		$neu['ob_ablauf_verwaltung']=serialize($value_dat['id_data']['meta_data_extra']['ablauf']);
 		$neu['ob_pdf_text']=($value_dat['pdf_text']);
-		$neu['ob_antragstellering']=($value_dat['meta_data_extra']['antragsstellerin']);
+		$neu['ob_antragstellering']=($value_dat['id_data']['meta_data_extra']['antragsstellerin']);
 		$neu['ob_geo_strasse']=$this->get_strasse($value_dat['geo']['strasse']['0']);
 		$neu['ob_geo_ortsteil']=$this->get_ortsteile($value_dat['geo']['ortsteile']);
 		$neu['ob_pdf_file_url']=($value_dat['pdf_file_url']);
 		$neu['ob_thumbnail']=serialize($value_dat['thumbnails']);
-		$neu['ob_osm_long']=$this->get_long($value_dat['geo']);
-		$neu['ob_osm_lat']=$this->get_lat($value_dat['geo']);
+        
+        //WEnn schon Geo Daten vorhanden sind im BORIS - diese übernehmen
+        if (!empty($value_dat['id_data']['meta_data_extra']['geo_referenz']['lon']))
+        {
+            $neu['ob_osm_long']= $value_dat['id_data']['meta_data_extra']['geo_referenz']['lon'];
+            $neu['ob_osm_lat'] = $value_dat['id_data']['meta_data_extra']['geo_referenz']['lat']; 
+        }
+        //Ansonsten die erstellten
+        else {
+            $neu['ob_osm_long']=$this->get_long($value_dat['geo']);
+            $neu['ob_osm_lat']=$this->get_lat($value_dat['geo']);
+        }
+		
 		$neu['ob_osm_raw_data']=serialize($value_dat['geo']);
 		
-		#print_r($neu);
+		#debug::print_d($neu);
 		
 		return $neu;
 	}

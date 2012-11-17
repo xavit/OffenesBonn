@@ -33,7 +33,7 @@ class get_rows
 		&e_search_mm=01 // Monat
 		&e_search_jjjj=2012 // Jahr
 		*/
-		echo 'Nächste Seite in 20 Sekunden... (get_rows) '.$url.'<meta http-equiv="refresh" content="20; URL='.$url.' ">';
+		#echo 'Nächste Seite in 20 Sekunden... (get_rows) '.$url.'<meta http-equiv="refresh" content="20; URL='.$url.' ">';
 		
 		$method=new class_methods();
 		$this->count=0;
@@ -78,8 +78,8 @@ class get_rows
 		
 		//Url
 		$url='http://www2.bonn.de/bo_ris/ris_sql/sum_profi_result.asp?e_search_1=&e_und_oder=and&e_search_2=&e_formulartyp=00&e_adl=*&e_gre_id=0&e_operator=gre_dat_termin+%3E%3D&e_search_tt='.$tag.'&e_search_mm='.$monat.'&e_search_jjjj='.$jahr.'&'.$dbpage;
-		$this->url=$url;
-		//exit();
+		#echo $this->url=$url;
+		#exit();
 		//http://www2.bonn.de/bo_ris/ris_sql/sum_profi_result.asp?e_search_1=&e_und_oder=and&e_search_2=&e_formulartyp=00&e_adl=*&e_gre_id=0&e_operator=gre_dat_termin+%3E%3D&e_search_tt=01&e_search_mm=01&e_search_jjjj=1997
 		
 		//$url='http://www2.bonn.de/bo_ris/ris_sql/sum_profi_result.asp?e_search_1=&e_und_oder=and&e_search_2=&e_formulartyp=00&e_adl=SPD%27+or+adl_kuerzel+%3D+%27CSG%27+or+adl_kuerzel+%3D+%27S%2BG%27+or+adl_kuerzel+%3D+%27C%2BS%27+or+adl_kuerzel+%3D+%27AMPEL&e_gre_id=0&e_operator=gre_dat_termin+%3E%3D&e_search_tt=01&e_search_mm=01&e_search_jjjj=2012';
@@ -100,13 +100,13 @@ class get_rows
 		
 		//Inhalte aus Rows in Array einlesen
 		$array_rows=$this->get_array_rows($html_rows);
-		//debug::print_d($array_rows);
-		//exit();
+		#debug::print_d($array_rows);
+		#exit();
 		
 		//Dann die Inhalte der Links und Dokumente noch einlesen
 		$complete1_array=$this->get_complete_data1($array_rows,$db);
-		//debug::print_d($complete1_array);
-		//exit();
+		#debug::print_d($complete1_array);
+		#exit();
 		
 		//Kein Dokument mehr gefunden das nicht in der DB ist
 		if (empty($complete1_array))
@@ -295,6 +295,7 @@ class get_rows
 			//Dann die Metainformationen zum Dokument
 			if (!empty($value['meta_link']))
 			{
+			    //echo 'http://www2.bonn.de/bo_ris/ris_sql/'.$value['meta_link'];
 				$dok=class_methods::get_site('http://www2.bonn.de/bo_ris/ris_sql/'.$value['meta_link']);
 				$row['meta_data']=$dok;
 				$row['meta_data_text']=class_methods::get_clean_text($dok);
@@ -387,7 +388,7 @@ class get_rows
 		//INI
 		$kosten_auflistung="";
 		$ende="";
-		
+		#echo $html;
 		//Zuerst mal Zugriffsart
 		$d1=explode("Zugriff",$html);
 		$d2=explode("</tr>",$d1['1']);
@@ -404,6 +405,13 @@ class get_rows
 		$d3=trim(strip_tags($d2['0']));
 		$d4=explode("\n",$d3);
 		
+        //Dann Geo Daten rausholen
+        $geo=explode("&mlon=",$html);
+        $geo_2=explode("&mlat=",$geo['1']);
+        $geo_3=explode("&icon=",$geo_2['1']);
+        #debug::print_d($geo_3['0']);
+        $extra['geo_referenz']['lon']=$geo_2['0'];
+        $extra['geo_referenz']['lat']=$geo_3['0'];
 		//Leer Zeilen entfernen
 		if (is_array($d4))
 		{
@@ -474,7 +482,7 @@ class get_rows
 		$d2=explode("</tr>",$d1['1']);
 		$extra['antragsstellerin']=class_methods::get_clean_text($d2['0']);
 		$extra['antragsstellerin_partei'] = $this->get_partei($extra['antragsstellerin']);
-
+        //debug::print_d($extra);
 		return $extra;
 	}
 	
@@ -549,7 +557,7 @@ class get_rows
 			//Neu zuweisen
 			$neu_td[$key]=$value;
 		}
-		//debug::print_d($neu_td);
+		#debug::print_d($neu_td);
 		//Zeile 1= Indikation ob sinnvoller Inhalt oder nicht
 		if (!empty($neu_td['1']))
 		{
@@ -592,7 +600,7 @@ class get_rows
 			//Zeile 5 = Datum der Sitzung in dem das Dokument auftaucht (nächstes oder letztes mal)
 			$row['datum'] 	= class_methods::get_clean_text($neu_td['7']);
 		}
-		#print_r($row);
+		#debug::print_d($row);
 		return $row;
 	}
 	
@@ -606,13 +614,14 @@ class get_rows
 	{
 		//Dokumentenname ist jetzt in einem i tag drin.
 		$i_array=explode("<i",$text);
-		//debug::print_d($i_array);
+        if (empty($i_array['2']))$i_array['2']=$i_array['1'];
+		#debug::print_d($i_array);
 		//Erste Zeile = Dokument
 		#(int) class_methods::get_clean_text
 		$i_array['1']=class_methods::get_clean_text(str_ireplace(">","",$i_array['1']));
 		$dok['id']=class_methods::get_clean_text(str_ireplace("Drucksache","",$i_array['1']));
 		$dok['id_int']= preg_replace("/[^0-9]/","",trim($dok['id']));
-
+        
 		$dok['betreff']= class_methods::get_clean_text($i_array['2']);
 		$dok['betreff']=str_ireplace(">","",$dok['betreff']);
 		//debug::print_d($dok);

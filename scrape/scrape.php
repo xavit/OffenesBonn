@@ -26,7 +26,8 @@ session_start();
 //{
 $rows=new get_rows();
 $row_data=$rows->get_rows_now();
-
+#debug::print_d($row_data);
+#exit();
 /**
  * Dann die Daten geolokalisieren
  * Dazu werden Straßen und Ortsteile ausgelesen
@@ -38,13 +39,14 @@ $row_data=$rows->get_rows_now();
  */
 $geo = new geo_class();
 $row_data_geo=$geo->create_lokalisierung($row_data);
-
+#debug::print_d($row_data_geo);
+#exit();
 
 /**
 * Einmal zwischenspeichern, damit die Rohdaten schon vorhanden sind
 */
-$save_data=new class_save_data();
-$save_data->save_now($row_data_complete,"noreload");
+#
+#$save_data->save_now($row_data_complete,"noreload");
 
 /**
  * Dann PDF und Images erstellen
@@ -69,6 +71,7 @@ $row_data_complete=$mkfile->create_files($row_data_geo);
  * der PDF Dokumente und HTML Inhalte 
  * werden in der Datenbank gespeichert
 */
+$save_data=new class_save_data();
 $save_data->save_now($row_data_complete);
 
 
