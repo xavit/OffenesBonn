@@ -7,11 +7,6 @@
 <script type="text/javascript" src="./js/jquery.js"></script>
 <script type="text/javascript" src='./js/vtip-min.js' ></script>
 <script type="text/javascript" src='./bootstrap/js/bootstrap.min.js' ></script>
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.css" />
-<!--[if lte IE 8]>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.ie.css" />
-<![endif]-->
-<script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script>
 <link rel="stylesheet" href="./bootstrap/css/bootstrap.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="./bootstrap/css/bootstrap-responsive.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -63,64 +58,11 @@
 
       <!-- Main hero unit for a primary marketing message or call to action -->
       <div class="hero-unit">
-       <h2 id="sport_suchen_nach_themen" class="h1" >{$plugin_sport_suchen_nach_themen}</h2>
-
- <label for="start_suche">{$plugin_sport_suche}{$plugin_error.start_suche} </label>
-
-<form class="navbar-search pull-left" method="get">
-	
-	<input type="text" style="width:400px;" name="start_suche" value="{$start_suche}" class="search-query" id="start_suche"/>
-<input class="btn" type="submit" name="submit_suche" id="submit_suche" value="{$plugin_sport_suche}" />
-<br />
-</form>
+      
       </div>
 
       <!-- Example row of columns -->
       <div class="row">	
-      	<div class="span12">
-      
-      		
-			<div id="map" style="width: 100%; height: 400px"></div>
-		
-
-	<script src="../dist/leaflet.js"></script>
-	<script>
-		var map = new L.Map('map');
-
-		var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/4734f27bb2ce4e9aa390288b06204728/52932/256/{z}/{x}/{y}.png',
-			cloudmadeAttribution = 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
-			cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18, attribution: cloudmadeAttribution});
-
-		map.setView(new L.LatLng(50.7064318015311,7.12659787095378), 11).addLayer(cloudmade);
-		
-		$.getJSON('/api.php?search={$start_suche}&page=', function(data) {
-		  var items = [];
-			
-			  $.each(data, function(key, val) {
-			    //alert(val['ob_osm_long']);
-			    if ((val['ob_osm_long']))
-			    {
-			    	  
-			    	 L.marker([val['ob_osm_lat'],val['ob_osm_long']]).addTo(map)
-            .bindPopup('Treffer: '+val['ob_kurz_betreff']+'<a href="http://www.myopenbonn.de/index.php?dokument_id='+val['ob_boris_id_int']+'">zum Eintrag</a>').closePopup();
-            
-			    }
-			  });
-			
-			  
-			});
-			
-	       
-
-       //L.marker([50.7064318015311,7.13659787095378]).addTo(map)
-       //     .bindPopup("<b>Hello world!</b><br />I am a popup.").closePopup();
-        
-
-
-		
-	</script>
-      	</div>
-
       		 	<div class="span12">
       		
       		

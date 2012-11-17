@@ -484,7 +484,7 @@ class class_divers
 		curl_setopt( $ch, CURLOPT_TIMEOUT, $timeout );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, 0 );
-				curl_setopt( $ch, CURLOPT_USERPWD,"offenes:bonn2012"); 	
+		curl_setopt( $ch, CURLOPT_USERPWD,"openboris:openboris2012!!"); 	
 		##curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1 );
 		curl_setopt( $ch, CURLOPT_USERAGENT,
 			"Mozilla/5.0 (Windows; U; Windows NT 5.1; rv:1.8.1.4) Gecko/20070515 Firefox/2.0.0.4" );

@@ -1,6 +1,6 @@
 <?php
 //Version
-define('VERSION',"0.0.1");
+define('VERSION',"0.1.2");
 //printf ( "<pre>%s</pre>" , print_r ( $_COOKIE , true )); 
 
 ini_set("memory_limit","128M");

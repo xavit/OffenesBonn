@@ -50,19 +50,23 @@ class class_start
 		
 		if (!empty($checked->dokument_id))
 		{
+			$inhalt = implode("", file(ABS_PFAD."/templates/index_single.html"));   
 			//Daten suchen
 			$search=$this->get_dokument();
-		
+		     
 			//Daten ausgeben
 			$daten=$this->create_ausgabe_single($search);
 		
 			$template_dat['search_ergebniss']=$daten;
+            
+            
+            
 		}
 		else
 		{
 			//Daten suchen
 			$search=$this->make_search();
-		
+		#debug::print_d($search);
 			//Daten ausgeben
 			$daten=$this->create_ausgabe($search);
 		
@@ -108,7 +112,7 @@ class class_start
 		if (!empty($checked->start_suche))
 		{
 			//Anzahl rausholen
-			//echo "http://www.kobos.de/ob/search/api.php?search=".$checked->start_suche."&count=1";
+			//echo API_URL."/api.php?search=".$checked->start_suche."&count=1";
 			$data=class_divers::http_request_open(API_URL."/api.php?search=".$checked->start_suche."&count=1");
 			#debug::print_d(json_decode($data,true));
 

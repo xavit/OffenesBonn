@@ -5,14 +5,12 @@
 
 470,19
 
-<link rel="stylesheet" href="http://code.leafletjs.com/leaflet-0.3.1/leaflet.css" />
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.css" />
 <!--[if lte IE 8]>
-    <link rel="stylesheet" href="http://code.leafletjs.com/leaflet-0.3.1/leaflet.ie.css" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.ie.css" />
 <![endif]-->
-<script src="http://code.leafletjs.com/leaflet-0.3.1/leaflet.js"></script>
 
-
-
+<script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script>
   </head>
   <body>
 <div id="map" style="width: 600px; height: 400px"></div>
@@ -26,6 +24,15 @@
 			cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18, attribution: cloudmadeAttribution});
 
 		map.setView(new L.LatLng(50.7064318015311,7.12659787095378), 15).addLayer(cloudmade);
+		
+
+        L.marker([50.7064318015311,7.12659787095378]).addTo(map)
+            .bindPopup("<b>Hello world!</b><br />I am a popup.").closePopup();
+
+       L.marker([50.7064318015311,7.13659787095378]).addTo(map)
+            .bindPopup("<b>Hello world!</b><br />I am a popup.").closePopup();
+        
+
 
 		
 	</script>

@@ -11,7 +11,7 @@
  * @version $Id$
  * @access public
  */
-if ( eregi('class_debug.php', $_SERVER['PHP_SELF']) ) die( 'You are not allowed to see this page directly' );
+if ( stristr( $_SERVER['PHP_SELF'],'class_debug.php') ) die( 'You are not allowed to see this page directly' );
 
 class debug
 {
