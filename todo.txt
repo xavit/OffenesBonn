@@ -1,0 +1,28 @@
+ToDos MyOpenBonn
+###############
+
+Datum letzte Bearbeitung 27.11.2012
+
+- Kommentare
+	Eingabefeld
+	DB Tabelle
+	
+- Benutzerverwaltung
+
+- Verlinkung mit anderen Dokumenten
+	aus der gleichen Datenbank
+	zu anderen Webseiten
+	
+- Anzeige verlinkte Dokumente
+
+- Kalender ical Ausgabe neue 
+
+- Editiermöglichkeit Georeferenz
+
+- Scraper - Counten via DB nicht via Session...
+	Updaten Counter am Anfang um zu große Dokumente überspringen zu können
+	Kontrolle Scraper ob alle Daten ankommen
+	
+- Besprechen mit Stadt Bonn über Nutzung...
+
+
