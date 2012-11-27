@@ -66,7 +66,11 @@ class class_api
 								OR ob_geo_strasse 	LIKE '%s'
 								OR ob_geo_ortsteil 	LIKE '%s'
 								OR ob_pdf_text 	LIKE '%s'
-								OR ob_partei 	LIKE '%s'								
+								OR ob_partei 	LIKE '%s'	
+								OR ob_kurz_betreff LIKE '%s'
+                                OR ob_zugriffsart LIKE '%s'
+                                OR ob_antragstellering LIKE '%s'
+                                							
 								LIMIT 20",
 								"openboris_basis",
 								"%".$db->escape($checked->search)."%",
@@ -74,6 +78,9 @@ class class_api
 								"%".$db->escape($checked->search)."%",
 								"%".$db->escape($checked->search)."%",
 								"%".$db->escape($checked->search)."%",
+								"%".$db->escape($checked->search)."%",
+                                "%".$db->escape($checked->search)."%",
+                                "%".$db->escape($checked->search)."%",
 								"%".$db->escape($checked->search)."%"
 								
 								);
@@ -113,11 +120,14 @@ class class_api
 			$sql=sprintf("SELECT * FROM %s 
 								WHERE 
 								ob_ausschuss LIKE '%s' 
-								OR ob_id_data_text 	LIKE '%s'
-								OR ob_geo_strasse 	LIKE '%s'
-								OR ob_geo_ortsteil 	LIKE '%s'
-								OR ob_pdf_text 	LIKE '%s'
-								OR ob_partei 	LIKE '%s'								
+                                OR ob_id_data_text  LIKE '%s'
+                                OR ob_geo_strasse   LIKE '%s'
+                                OR ob_geo_ortsteil  LIKE '%s'
+                                OR ob_pdf_text  LIKE '%s'
+                                OR ob_partei    LIKE '%s'   
+                                OR ob_kurz_betreff LIKE '%s'
+                                OR ob_zugriffsart LIKE '%s'
+                                OR ob_antragstellering LIKE '%s'							
 								%s",
 								"openboris_basis",
 								"%".$db->escape($checked->search)."%",
@@ -126,6 +136,9 @@ class class_api
 								"%".$db->escape($checked->search)."%",
 								"%".$db->escape($checked->search)."%",
 								"%".$db->escape($checked->search)."%",
+								"%".$db->escape($checked->search)."%",
+                                "%".$db->escape($checked->search)."%",
+                                "%".$db->escape($checked->search)."%",
 								$weiter->sqllimit
 								
 								);

@@ -25,4 +25,7 @@ Datum letzte Bearbeitung 27.11.2012
 	
 - Besprechen mit Stadt Bonn über Nutzung...
 
+- FIXES :-)
+
+
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Dashboard</title>
+<title>MyOpenBonn - Opendata Schnittstelle zu Bonner Daten</title>
  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script type="text/javascript" src="./js/jquery.js"></script>
 <script type="text/javascript" src='./js/vtip-min.js' ></script>
@@ -93,7 +93,7 @@
 
 		map.setView(new L.LatLng(50.7064318015311,7.12659787095378), 11).addLayer(cloudmade);
 		
-		$.getJSON('./api.php?search={$start_suche}&xpage=all', function(data) {
+		$.getJSON('/api.php?search={$start_suche}&xpage=all', function(data) {
 		  var items = [];
 			
 			  $.each(data, function(key, val) {
@@ -102,7 +102,7 @@
 			    {
 			    	  
 			    	 L.marker([val['ob_osm_lat'],val['ob_osm_long']]).addTo(map)
-            .bindPopup('Treffer: '+val['ob_kurz_betreff']+'<a href="http://localhost/OffenesBonn/search/index.php?dokument_id='+val['ob_boris_id_int']+'">zum Eintrag</a>').closePopup();
+            .bindPopup(''+val['ob_kurz_betreff']+' - <a href="http://www.myopenbonn.de/index.php?dokument_id='+val['ob_boris_id_int']+'">zum Eintrag</a>').closePopup();
             
 			    }
 			  });

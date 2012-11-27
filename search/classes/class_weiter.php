@@ -473,7 +473,7 @@ class  weiter  {
 				{
 					if ($value['aktivhref']==1)
 					{
-						$whtml.='<li class="weiterli"><strong title="'.$lang_dat['plugins_seite_weiter_aktuell'].'">'.$value['linknummer'].'</strong> 
+						$whtml.='<li class="weiterli"><a title="'.$lang_dat['plugins_seite_weiter_aktuell'].'">'.$value['linknummer'].'</a> 
 					</li>';
 					}
 					else

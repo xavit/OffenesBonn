@@ -155,9 +155,9 @@ class class_start
 		{
 			foreach ($daten as $key=>$value)
 			{	
-				$liste.='<li class="result_item"><a href="./index.php?dokument_id='.class_divers::make_ausgabe($value['ob_boris_id_int']).'"><span class="titel">'.class_divers::make_ausgabe($value['ob_kurz_betreff']).'</span>';
+				$liste.='<li class="result_item"><a href="./index.php?dokument_id='.class_divers::make_ausgabe($value['ob_boris_id_int']).'"><span class="titel">'.class_divers::make_ausgabe($value['ob_kurz_betreff']).'</span></a>';
 				
-				$liste.='<br /><span class="sub_title">Dokument '.class_divers::make_ausgabe($value['ob_boris_id']).' vom '.class_divers::make_ausgabe($value['ob_datum']).' - gescannt am '.class_divers::format_date($value['ob_timestamp_erstellung_ob']).'</span></a></li>';	
+				$liste.='<br /><span class="sub_title">Dokument Nr. '.class_divers::make_ausgabe($value['ob_boris_id']).' vom '.class_divers::make_ausgabe($value['ob_datum']).' - gescannt am '.class_divers::format_date($value['ob_timestamp_erstellung_ob']).'</span></li>';	
 			}
 		}
 		return $liste;
@@ -183,12 +183,12 @@ class class_start
   ...
 </ul>
          * */
-         
+         global $template_dat;
 		if (is_array($daten))
 		{
 			foreach ($daten as $key=>$value)
 			{
-				$liste.='<h2>'.class_divers::make_ausgabe($value['ob_kurz_betreff']).'</h2>';
+				$template_dat['single_dok_header']='<h2>'.class_divers::make_ausgabe($value['ob_kurz_betreff']).'</h2>';
 				$liste.='Art des Dokuments: '.class_divers::make_ausgabe($value['ob_formular_art']).'<br />';
 				$liste.='Erstellt am: '.class_divers::format_date($value['ob_timestamp_erstellung_ob']).'<br />';
 				$liste.='Quelle: <a href="http://www2.bonn.de/bo_ris/ris_sql/'.class_divers::make_ausgabe($value['ob_meta_link']).'">Ratsinfosystem Stadt Bonn</a></p>';
@@ -224,7 +224,7 @@ class class_start
 					//debug::print_d($im1);
 					//$im1['1']=str_ireplace(".jpg",".jpg",$im1['1']);
 					$scraper_url=SCRAPER_URL;
-					$img_html.='<li  class="span4"><a  class="thumbnail" href="'.SCRAPER_URL.class_divers::make_ausgabe($link).'"> <img src="'.$scraper_url.$im1['1'].'" /></a></li>';
+					$img_html.='<li  class="span3"><a  class="thumbnail" href="'.SCRAPER_URL.class_divers::make_ausgabe($link).'"> <img src="'.$scraper_url.$im1['1'].'" /></a></li>';
 				}
 			}
 		}

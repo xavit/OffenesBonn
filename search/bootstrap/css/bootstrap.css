@@ -202,6 +202,7 @@ a:hover {
 .row {
   margin-left: -20px;
   *zoom: 1;
+  background:#F1F5E6;
 }
 
 .row:before,

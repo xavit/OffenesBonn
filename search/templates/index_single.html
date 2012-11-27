@@ -58,27 +58,71 @@
 
       <!-- Main hero unit for a primary marketing message or call to action -->
       <div class="hero-unit">
-      
+      {$single_dok_header}
       </div>
 
       <!-- Example row of columns -->
       <div class="row">	
-      		 	<div class="span12">
+      		 	<div class="span8">
       		
 		<a href="{$api_url}">{$api_url}</a>
 		 
 		 #start#
 		 <div class="liste_image">
-
+		  
 		 <ol start="{$start_ol}">
 		 {$search_ergebniss}
 		
 		</ol>
-
+		
+		<div class="comment">
+      	<h2>Kommentare</h2>
+      	 <div class="form">
+              <form id="artikel_kommentar" action="" method="post" name="artikel_kommentar" class="form-horizontal">
+                <fieldset>
+                  <legend>Kommentar schreiben:</legend> 
+                   <div class="control-group">
+                  <label class="control-label" for="neuvorname">Autor:</label>
+                  <div class="controls"><input type="text" class="inpt" id="neuvorname" name="neuvorname" size="30" maxlength="78" value="" /></div></div>
+                  
+                   <div class="control-group">
+                  <label for="formthema" class="control-label">Thema:</label>
+                  <div class="controls"><input type="text" class="inpt" id="formthema" name="formthema" size="30" maxlength="78" value="" /></div></div>
+                  
+                   <div class="control-group">
+                  <label for="inhalt" class="control-label">Beitrag:</label>
+                  <div class="controls"><textarea class="txt" id="inhalt" name="inhalt" rows="10" cols="30">
+</textarea></div></div>
+                  <!-- MODUL: spamschutz (intern)
+                  <div id="spamschutz">
+                    <fieldset>
+                      <legend>Spam-Schutz</legend>
+                      <p>
+                        Aus Gründen der Sicherheit ist dieses Formular mit einem Schutz gegen unerwünschte E-Mails (Spam) versehen.
+                      </p>
+                      <p>
+                        Damit Sie dieses Formular absenden können, lösen Sie bitte die folgende Aufgabe.
+                      </p><label for="spamcode">Die Zahl 77 minus die Zahl 5 =</label> <input type="text" name="spamcode" id="spamcode" size="4" maxlength="10" value="" /><br />
+                    </fieldset>
+                  </div>  ENDE MODUL: spamschutz (intern) -->
+                   <div class="control-group"><div class="controls">
+                  <input type="submit" class="btn btn-primary" value="Eintragen" name="uebermittelformular" />
+                  </div></div>
+                </fieldset>
+              </form>
+            </div>
+      	</div>
+		
 		      </div>
       	
        
       </div>
+      <div class="more_docs span8">
+      	<h2>Verkn&uuml;pfte Dokumente</h2>
+      	
+      </div>
+      
+      
 
       <hr>
 
