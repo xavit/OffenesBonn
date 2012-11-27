@@ -173,6 +173,17 @@ class class_start
 	{
 		global $lang_dat;
 		//$daten=$this->sub_sort($daten);
+		/**
+         * <ul class="thumbnails">
+  <li class="span4">
+    <a href="#" class="thumbnail">
+      <img src="http://placehold.it/300x200" alt="">
+    </a>
+  </li>
+  ...
+</ul>
+         * */
+         
 		if (is_array($daten))
 		{
 			foreach ($daten as $key=>$value)
@@ -183,8 +194,8 @@ class class_start
 				$liste.='Quelle: <a href="http://www2.bonn.de/bo_ris/ris_sql/'.class_divers::make_ausgabe($value['ob_meta_link']).'">Ratsinfosystem Stadt Bonn</a></p>';
 				$liste.='<h2>Dokumente</h2>';
 				
-				$thumbnails=$this->get_thumbnails($value['ob_thumbnail']);
-				$liste.='<div class="thumbnails"><a href="'.SCRAPER_URL.class_divers::make_ausgabe($value['ob_pdf_file_url']).'"> '.$thumbnails.'</a></div>';
+				$thumbnails=$this->get_thumbnails($value['ob_thumbnail'],$value['ob_pdf_file_url']);
+				$liste.='<ul class="thumbnails">'.$thumbnails.'</ul>';
 				$liste.='<div class="subtext"> '.class_divers::make_ausgabe(substr($value['ob_id_data_text'],0,300)).'</div>';
 				$liste.='<div class="download"><a href="'.SCRAPER_URL.class_divers::make_ausgabe($value['ob_pdf_file_url']).'">Download Dokument</a></div>';
 			}
@@ -198,7 +209,7 @@ class class_start
 	 * @param string $thumbnails. (default: "")
 	 * @return void
 	 */
-	private function get_thumbnails($thumbnails="")
+	private function get_thumbnails($thumbnails="",$link="")
 	{
 		$thumbs=unserialize($thumbnails);
 		//debug::print_d($thumbs);
@@ -213,7 +224,7 @@ class class_start
 					//debug::print_d($im1);
 					//$im1['1']=str_ireplace(".jpg",".jpg",$im1['1']);
 					$scraper_url=SCRAPER_URL;
-					$img_html.='<img src="'.$scraper_url.$im1['1'].'" />';
+					$img_html.='<li  class="span4"><a  class="thumbnail" href="'.SCRAPER_URL.class_divers::make_ausgabe($link).'"> <img src="'.$scraper_url.$im1['1'].'" /></a></li>';
 				}
 			}
 		}

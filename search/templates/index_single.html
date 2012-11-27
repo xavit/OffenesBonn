@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Dashboard - myseoapp.de</title>
-
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script type="text/javascript" src="./js/jquery.js"></script>
 <script type="text/javascript" src='./js/vtip-min.js' ></script>
 <script type="text/javascript" src='./bootstrap/js/bootstrap.min.js' ></script>
@@ -65,24 +65,16 @@
       <div class="row">	
       		 	<div class="span12">
       		
-      		
-      		
-		 <h3 id="sport_die_ergebnisse_ihrer_suche" class="h1" >{$plugin_sport_die_ergebnisse_ihrer_suche} nach "{$start_suche}" - {$result_anzahl}  {$plugin_sport_ergebnisse}</h3>
 		<a href="{$api_url}">{$api_url}</a>
 		 
 		 #start#
 		 <div class="liste_image">
-		  <div class="pagination">
-		 {$paginating}
-		</div>
-		
+
 		 <ol start="{$start_ol}">
 		 {$search_ergebniss}
 		
 		</ol>
-		<div class="pagination">
-		 {$paginating}
-		</div>
+
 		      </div>
       	
        
