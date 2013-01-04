@@ -525,7 +525,7 @@ class class_save_data
 			}
 		}
        #debug::print_d($value_dat['id_data']['meta_data_extra']);
-		$neu['ob_id_data_text']=$value_dat['id_data']['html_text'];
+		$neu['ob_id_data_text']=$value_dat['id_data']['html_text'].$value_dat['id_data']['pfd_text'].$value_dat['id_data']['sonstiges_text'];
 		$neu['ob_meta_daten']=serialize($value_dat['id_data']['html_meta']);
 		$neu['ob_zugriffsart']=($value_dat['id_data']['meta_data_extra']['zugriff']);
 		$neu['ob_partei']=serialize($value_dat['id_data']['meta_data_extra']['antragsstellerin_partei']);

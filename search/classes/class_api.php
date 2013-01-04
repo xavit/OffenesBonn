@@ -37,7 +37,7 @@ class class_api
 		global $inhalt;
 		global $checked;
 		
-
+        //debug::print_d($checked);
 		if (!empty($checked->count))
 		{
 			print_r(json_encode($this->get_search_count()));
@@ -161,9 +161,22 @@ class class_api
 								$db->escape($checked->dokument_id)
 								
 								);
-				$result = $this->db->get_results($sql);
-				//debug::print_d($result);
-				print_r(json_encode($result));
+			$result = $this->db->get_results($sql,ARRAY_A);
+            
+            //Dann die zugehörigen KOmmentare
+            $sql=sprintf("SELECT * FROM %s 
+                                WHERE 
+                                comment_article = '%s'                              
+                                ",
+                                "openboris_papoo_message",
+                                $db->escape($checked->dokument_id)
+                                
+                                );
+            $result2 = $this->db->get_results($sql,ARRAY_A);
+            
+            $result['0']['comments']=$result2;
+			//debug::print_d($result);
+			print_r(json_encode($result));
 		}
 	}
 

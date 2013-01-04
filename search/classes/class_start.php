@@ -93,9 +93,33 @@ class class_start
         {
             //checken ob sinnvolle Daten da drin sind...
             $this->check_comment();
+            
+            //Daten sind ok
             if ($this->check_comment_form=="ok")
             {
-                
+                $checked->neuvorname=strip_tags($checked->neuvorname);
+                $checked->formthema=strip_tags($checked->formthema);
+                $checked->inhalt=strip_tags($checked->inhalt);
+                //In DB eintragen
+                $sql=sprintf("INSERT INTO %s SET
+                            userid='11',
+                            forumid='20',
+                            thema='%s',
+                            messagetext='%s',
+                            zeitstempel='%s',
+                            msg_frei='1',
+                            username_guest='%s',
+                            comment_article='%s'
+                            ",
+                            DB_PRAEFIX."papoo_message",
+                            $db->escape($checked->formthema),
+                            $db->escape($checked->inhalt),
+                            time(),
+                            $db->escape($checked->neuvorname),
+                            $db->escape($checked->dokument_id)
+                            
+                            );
+                 $db->query($sql);
             }
             
         }
@@ -128,6 +152,11 @@ class class_start
             
         }
         
+        if (empty($template_dat['error']))
+        {
+            $this->check_comment_form="ok";
+            
+        }
         
     }
     
@@ -164,12 +193,15 @@ class class_start
 		
 		if (!empty($checked->start_suche))
 		{
+			$checked->start_suche=urlencode($checked->start_suche);    
 			//Anzahl rausholen
-			//echo API_URL."/api.php?search=".$checked->start_suche."&count=1";
-			$data=class_divers::http_request_open(API_URL."/api.php?search=".$checked->start_suche."&count=1");
+			$url= API_URL."/api.php?search=".$checked->start_suche."&count=1";
+			$data=class_divers::http_request_open($url);
+            //debug::print_d($data);
 			#debug::print_d(json_decode($data,true));
 
 			$weiter->result_anzahl=json_decode($data,true);
+            #debug::print_d($weiter->result_anzahl);
 			if (!is_numeric($weiter->result_anzahl))
 			{
 				$weiter->result_anzahl=0;
@@ -204,6 +236,7 @@ class class_start
 	{
 		global $lang_dat;
 		//$daten=$this->sub_sort($daten);
+		//debug::print_d($daten);
 		if (is_array($daten))
 		{
 			foreach ($daten as $key=>$value)
@@ -256,6 +289,21 @@ class class_start
 				$liste.='<ul class="thumbnails">'.$thumbnails.'</ul>';
 				$liste.='<div class="subtext"> '.class_divers::make_ausgabe(substr($value['ob_id_data_text'],0,300)).'</div>';
 				$liste.='<div class="download"><a href="'.SCRAPER_URL.class_divers::make_ausgabe($value['ob_pdf_file_url']).'">Download Dokument</a></div>';
+                
+                $liste.='<h2>Kommentare</h2>';
+                if (!empty($value['comments']))
+                {
+                   foreach ($value['comments'] as $ck=>$cv)
+                   {
+                       
+                       $text.='<div class="media"><div class="media-body">
+                            <h4 class="media-heading">'.class_divers::make_ausgabe($cv['thema']).'</h4>'.class_divers::make_ausgabe($cv['messagetext']).'<br /><small>Von '.$cv['username_guest'].' am  '.class_divers::format_date($cv['zeitstempel']).'</small>                        </div></div>';
+                   }
+                       
+                  $liste.=$text;  
+
+                    
+                }
 			}
 		}
 		return $liste;
