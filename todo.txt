@@ -3,17 +3,15 @@ ToDos MyOpenBonn
 
 Datum letzte Bearbeitung 27.11.2012
 
-- Kommentare
-	Eingabefeld
-	DB Tabelle
+
+- Anzeige externe verlinkte Dokumente
 	
 - Benutzerverwaltung
 
 - Verlinkung mit anderen Dokumenten
-	aus der gleichen Datenbank
 	zu anderen Webseiten
-	
-- Anzeige verlinkte Dokumente
+	gleiche DB
+	Eingabefeld dafür...
 
 - Kalender ical Ausgabe neue 
 
@@ -26,6 +24,15 @@ Datum letzte Bearbeitung 27.11.2012
 - Besprechen mit Stadt Bonn über Nutzung...
 
 - FIXES :-)
+
+
+* FERTIG 04.01.2013 *
+- Kommentare 
+	Eingabefeld
+	DB Tabelle
+
+- Anzeige verlinkte Dokumente aus eigener Datenbank
+
 
 
 
