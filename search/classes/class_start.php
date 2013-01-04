@@ -304,6 +304,23 @@ class class_start
 
                     
                 }
+                
+                if (!empty($value['sonstige_dokumente']))
+                {
+                   $liste.='<h2>Dazugeh&ouml;rige Dokumente</h2>';
+                   $text2.='<div class="media"><div class="media-body"><ul>';
+                   foreach ($value['sonstige_dokumente'] as $ck=>$cv)
+                   {
+                       //'.SCRAPER_URL.'/index.php?dokument_id='.class_divers::make_ausgabe($cv['ob_boris_id_int']).'
+                       $text2.='
+                            <li><a href="'.API_URL.'index.php?dokument_id='.class_divers::make_ausgabe($cv['ob_boris_id_int']).'">'.class_divers::make_ausgabe($cv['ob_kurz_betreff']).'</a></li>';
+                   }
+                    $text2.='</ul></div></div>';
+                       
+                  $liste.=$text2;  
+
+                    
+                }
 			}
 		}
 		return $liste;

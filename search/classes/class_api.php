@@ -175,6 +175,22 @@ class class_api
             $result2 = $this->db->get_results($sql,ARRAY_A);
             
             $result['0']['comments']=$result2;
+            
+            //Dann weitere zugehörige Dokumente
+            $dok_id=substr($checked->dokument_id,0,7);
+            
+            $sql=sprintf("SELECT ob_boris_id_int, ob_kurz_betreff FROM %s 
+                                WHERE 
+                                ob_boris_id  LIKE '%s'                              
+                                ",
+                                "openboris_basis",
+                                "%".$db->escape($dok_id)."%"
+                                
+                                );
+            $result3 = $this->db->get_results($sql,ARRAY_A);
+            
+            $result['0']['sonstige_dokumente']=$result3;
+            
 			//debug::print_d($result);
 			print_r(json_encode($result));
 		}
