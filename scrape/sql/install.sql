@@ -200,3 +200,30 @@ CREATE TABLE IF NOT EXISTS `openboris_thumbnails` (
 -- Daten für Tabelle `openboris_thumbnails`
 --
 
+DROP TABLE IF EXISTS `openboris_papoo_message`; ##b_dump##
+CREATE TABLE `openboris_papoo_message` (
+  `msgid` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` int(11) NOT NULL DEFAULT '0',
+  `forumid` int(11) NOT NULL DEFAULT '0',
+  `parentid` int(11) NOT NULL DEFAULT '0',
+  `rootid` int(11) NOT NULL DEFAULT '0',
+  `thema` varchar(80) NOT NULL,
+  `messagetext` mediumtext NOT NULL,
+  `messagetext_bbcode` mediumtext NOT NULL,
+  `level` int(11) NOT NULL DEFAULT '0',
+  `zeitstempel` varchar(255) NOT NULL,
+  `ordnung` varchar(255) NOT NULL,
+  `counten` int(11) NOT NULL DEFAULT '0',
+  `comment_article` int(11) NOT NULL DEFAULT '0',
+  `intranet_yn` int(11) NOT NULL DEFAULT '0',
+  `username_guest` varchar(255) NOT NULL,
+  `answers` int(11) NOT NULL DEFAULT '0',
+  `letzter_beitrag_zeit` varchar(250) NOT NULL,
+  `letzter_beitrag_id` int(20) NOT NULL,
+  `msg_frei` varchar(255) NOT NULL,
+  PRIMARY KEY (`msgid`),
+  KEY `rootID` (`rootid`),
+  KEY `forumID` (`forumid`),
+  KEY `orderstr` (`ordnung`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ;
+

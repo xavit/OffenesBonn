@@ -56,6 +56,9 @@ class class_start
 		     
 			//Daten ausgeben
 			$daten=$this->create_ausgabe_single($search);
+            
+            //Kommentare verarbeiten
+            $this->do_comment();
 		
 			$template_dat['search_ergebniss']=$daten;
             
@@ -78,6 +81,56 @@ class class_start
 		
 	}
 	
+    
+    private function do_comment()
+    {
+        global $checked;
+        global $db;
+        global $template_dat;
+            
+        //Wenn eintragen
+        if (!empty($checked->uebermittelformular))
+        {
+            //checken ob sinnvolle Daten da drin sind...
+            $this->check_comment();
+            if ($this->check_comment_form=="ok")
+            {
+                
+            }
+            
+        }
+        
+    }
+    /**
+     * 
+     */
+    private function check_comment()
+    {
+        global $checked;
+        global $db;
+        global $template_dat;
+        if (empty($checked->neuvorname))
+        {
+            $template_dat['error_neuvorname']="ok";
+            $template_dat['error']="ok";
+            
+        }
+        if (empty($checked->formthema))
+        {
+            $template_dat['error_formthema']="ok";
+            $template_dat['error']="ok";
+            
+        }
+        if (empty($checked->inhalt))
+        {
+            $template_dat['error_inhalt']="ok";
+            $template_dat['error']="ok";
+            
+        }
+        
+        
+    }
+    
 	private function get_dokument()
 	{
 		global $checked;
@@ -188,6 +241,11 @@ class class_start
 		{
 			foreach ($daten as $key=>$value)
 			{
+				foreach ($value as $key1=>$value1)
+                {    
+                    $template_dat[$key1]    = $value1;
+                } 
+				
 				$template_dat['single_dok_header']='<h2>'.class_divers::make_ausgabe($value['ob_kurz_betreff']).'</h2>';
 				$liste.='Art des Dokuments: '.class_divers::make_ausgabe($value['ob_formular_art']).'<br />';
 				$liste.='Erstellt am: '.class_divers::format_date($value['ob_timestamp_erstellung_ob']).'<br />';
